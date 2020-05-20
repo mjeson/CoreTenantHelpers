@@ -1,0 +1,80 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>BlitzkriegSoftware.Tenant.FileProvider</name>
+    </assembly>
+    <members>
+        <member name="T:BlitzkriegSoftware.Tenant.FileProvider.JsonFileProvider">
+            <summary>
+            Tenant Provider: Json Files
+            </summary>
+        </member>
+        <member name="M:BlitzkriegSoftware.Tenant.FileProvider.JsonFileProvider.#ctor(System.IO.DirectoryInfo)">
+            <summary>
+            CTOR
+            </summary>
+            <param name="rootFolder"></param>
+        </member>
+        <member name="M:BlitzkriegSoftware.Tenant.FileProvider.JsonFileProvider.ContactGet(System.Guid)">
+            <summary>
+            Contact Get
+            </summary>
+            <param name="tenantId">Key</param>
+            <returns>Contact</returns>
+        </member>
+        <member name="M:BlitzkriegSoftware.Tenant.FileProvider.JsonFileProvider.ContactAddUpdate(System.Guid,BlitzkriegSoftware.Tenant.Libary.Models.ITenantContact)">
+            <summary>
+            Contact Add/Update
+            </summary>
+            <param name="tenantId">Key</param>
+            <param name="contact">Contact</param>
+            <returns>True if existed, false if new</returns>
+        </member>
+        <member name="M:BlitzkriegSoftware.Tenant.FileProvider.JsonFileProvider.ConfigurationGet(System.Guid,System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            Configuration Get
+            </summary>
+            <param name="tenantId">Key</param>
+            <param name="keys">(optional) Keys to fetch</param>
+            <returns>Configuration</returns>
+        </member>
+        <member name="M:BlitzkriegSoftware.Tenant.FileProvider.JsonFileProvider.ConfigurationGet(System.Guid,System.String)">
+            <summary>
+            Configuration Get
+            </summary>
+            <param name="tenantId">Key</param>
+            <param name="startsWith">(optional) starts with</param>
+            <returns>Configuration</returns>
+        </member>
+        <member name="M:BlitzkriegSoftware.Tenant.FileProvider.JsonFileProvider.ConfigurationAddUpdate(System.Guid,System.Collections.Generic.IEnumerable{System.Collections.Generic.KeyValuePair{System.String,System.String}})">
+            <summary>
+            ConfigurationAddUpdate
+            </summary>
+            <param name="tenantId">Tenant Id</param>
+            <param name="config">Configuration is entirely replaced</param>
+            <returns>True if existed</returns>
+        </member>
+        <member name="M:BlitzkriegSoftware.Tenant.FileProvider.JsonFileProvider.TenantExists(System.Guid)">
+            <summary>
+            Tenant Exists?
+            </summary>
+            <param name="tenantId">Key</param>
+            <returns>True if exists</returns>
+        </member>
+        <member name="M:BlitzkriegSoftware.Tenant.FileProvider.JsonFileProvider.TenantAddUpdate(BlitzkriegSoftware.Tenant.Libary.Models.ITenantModel)">
+            <summary>
+            Tenant Add/Update
+            </summary>
+            <param name="model"></param>
+            <returns>True if created, false if updated</returns>
+        </member>
+        <member name="M:BlitzkriegSoftware.Tenant.FileProvider.JsonFileProvider.TenantDelete(System.Guid)">
+            <summary>
+            Delete tenant
+            <para>Warning! Destructive!</para>
+            </summary>
+            <param name="tenantId"></param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

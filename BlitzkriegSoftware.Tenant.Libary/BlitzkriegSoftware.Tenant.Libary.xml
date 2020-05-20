@@ -1,0 +1,164 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>BlitzkriegSoftware.Tenant.Libary</name>
+    </assembly>
+    <members>
+        <member name="T:BlitzkriegSoftware.Tenant.Libary.ITenantProvider">
+            <summary>
+            Generic Contract: Tenancy Providers
+            </summary>
+        </member>
+        <member name="M:BlitzkriegSoftware.Tenant.Libary.ITenantProvider.ContactGet(System.Guid)">
+            <summary>
+            Gets back the detailed tenant contact information
+            </summary>
+            <param name="tenantId">Primary Key</param>
+            <returns>ITenantContact</returns>
+        </member>
+        <member name="M:BlitzkriegSoftware.Tenant.Libary.ITenantProvider.ContactAddUpdate(System.Guid,BlitzkriegSoftware.Tenant.Libary.Models.ITenantContact)">
+            <summary>
+            
+            </summary>
+            <param name="tenantId">Primary Key</param>
+            <param name="contact"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BlitzkriegSoftware.Tenant.Libary.ITenantProvider.ConfigurationGet(System.Guid,System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            Fetch Configuration
+            </summary>
+            <param name="tenantId">Primary Key</param>
+            <param name="keys">List of keys to return (null is all config)</param>
+            <returns></returns>
+        </member>
+        <member name="M:BlitzkriegSoftware.Tenant.Libary.ITenantProvider.ConfigurationGet(System.Guid,System.String)">
+            <summary>
+            Fetch Configuration
+            </summary>
+            <param name="tenantId">Primary Key</param>
+            <param name="startsWith">Filter down to keys that `start with` (empty is all config)</param>
+            <returns></returns>
+        </member>
+        <member name="M:BlitzkriegSoftware.Tenant.Libary.ITenantProvider.ConfigurationAddUpdate(System.Guid,System.Collections.Generic.IEnumerable{System.Collections.Generic.KeyValuePair{System.String,System.String}})">
+            <summary>
+            Adds/Updates configuration for a tenant
+            </summary>
+            <param name="tenantId">Primary Key</param>
+            <param name="config">Configuration as used by <c>Microsoft.Extensions.Configuration</c> <c>MemoryCollection</c></param>
+            <returns></returns>
+        </member>
+        <member name="M:BlitzkriegSoftware.Tenant.Libary.ITenantProvider.TenantExists(System.Guid)">
+            <summary>
+            Does Tenant Exist
+            </summary>
+            <param name="tenantId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BlitzkriegSoftware.Tenant.Libary.ITenantProvider.TenantAddUpdate(BlitzkriegSoftware.Tenant.Libary.Models.ITenantModel)">
+            <summary>
+            Add/Update an entire tenant graph
+            </summary>
+            <param name="model">ITenantModel</param>
+            <returns>True if created, False if updated</returns>
+        </member>
+        <member name="M:BlitzkriegSoftware.Tenant.Libary.ITenantProvider.TenantDelete(System.Guid)">
+            <summary>
+            Delete Tenant
+            <para>Implementationn should call out if this is destructive</para>
+            </summary>
+            <param name="tenantId">Primary Key</param>
+            <returns>True if deleted</returns>
+        </member>
+        <member name="T:BlitzkriegSoftware.Tenant.Libary.Models.ContactBase">
+            <summary>
+            Model: Contact
+            </summary>
+        </member>
+        <member name="P:BlitzkriegSoftware.Tenant.Libary.Models.ContactBase.TenantId">
+            <summary>
+            Key
+            </summary>
+        </member>
+        <member name="P:BlitzkriegSoftware.Tenant.Libary.Models.ContactBase.DisplayName">
+            <summary>
+            Display Name
+            </summary>
+        </member>
+        <member name="P:BlitzkriegSoftware.Tenant.Libary.Models.ContactBase.ContactPhone">
+            <summary>
+            Contact Phone
+            </summary>
+        </member>
+        <member name="P:BlitzkriegSoftware.Tenant.Libary.Models.ContactBase.ContactEmail">
+            <summary>
+            Contract E-Mail
+            </summary>
+        </member>
+        <member name="P:BlitzkriegSoftware.Tenant.Libary.Models.ContactBase.ContactName">
+            <summary>
+            Contact Name
+            </summary>
+        </member>
+        <member name="T:BlitzkriegSoftware.Tenant.Libary.Models.ITenantContact">
+            <summary>
+            Tenant Contract
+            </summary>
+        </member>
+        <member name="P:BlitzkriegSoftware.Tenant.Libary.Models.ITenantContact.TenantId">
+            <summary>
+            Key
+            </summary>
+        </member>
+        <member name="P:BlitzkriegSoftware.Tenant.Libary.Models.ITenantContact.DisplayName">
+            <summary>
+            Tenant Display Name
+            </summary>
+        </member>
+        <member name="P:BlitzkriegSoftware.Tenant.Libary.Models.ITenantContact.ContactPhone">
+            <summary>
+            Phone (optional)
+            </summary>
+        </member>
+        <member name="P:BlitzkriegSoftware.Tenant.Libary.Models.ITenantContact.ContactEmail">
+            <summary>
+            EMail of Primary Contact
+            </summary>
+        </member>
+        <member name="P:BlitzkriegSoftware.Tenant.Libary.Models.ITenantContact.ContactName">
+            <summary>
+            Contact Name
+            </summary>
+        </member>
+        <member name="T:BlitzkriegSoftware.Tenant.Libary.Models.ITenantModel">
+            <summary>
+            Tenant Model Interface
+            </summary>
+        </member>
+        <member name="P:BlitzkriegSoftware.Tenant.Libary.Models.ITenantModel.Contact">
+            <summary>
+            Contact
+            </summary>
+        </member>
+        <member name="P:BlitzkriegSoftware.Tenant.Libary.Models.ITenantModel.Configuration">
+            <summary>
+            Configuration
+            </summary>
+        </member>
+        <member name="T:BlitzkriegSoftware.Tenant.Libary.Models.TenantBase">
+            <summary>
+            Model: Tenant Base
+            </summary>
+        </member>
+        <member name="P:BlitzkriegSoftware.Tenant.Libary.Models.TenantBase.Contact">
+            <summary>
+            Contact
+            </summary>
+        </member>
+        <member name="P:BlitzkriegSoftware.Tenant.Libary.Models.TenantBase.Configuration">
+            <summary>
+            Configuration
+            </summary>
+        </member>
+    </members>
+</doc>
