@@ -22,7 +22,7 @@
             <param name="tenantId">Key</param>
             <returns>Contact</returns>
         </member>
-        <member name="M:BlitzkriegSoftware.Tenant.FileProvider.JsonFileProvider.ContactAddUpdate(System.Guid,BlitzkriegSoftware.Tenant.Libary.Models.ITenantContact)">
+        <member name="M:BlitzkriegSoftware.Tenant.FileProvider.JsonFileProvider.ContactUpdate(System.Guid,BlitzkriegSoftware.Tenant.Libary.Models.ITenantContact)">
             <summary>
             Contact Add/Update
             </summary>
@@ -46,7 +46,7 @@
             <param name="startsWith">(optional) starts with</param>
             <returns>Configuration</returns>
         </member>
-        <member name="M:BlitzkriegSoftware.Tenant.FileProvider.JsonFileProvider.ConfigurationAddUpdate(System.Guid,System.Collections.Generic.IEnumerable{System.Collections.Generic.KeyValuePair{System.String,System.String}})">
+        <member name="M:BlitzkriegSoftware.Tenant.FileProvider.JsonFileProvider.ConfigurationUpdate(System.Guid,System.Collections.Generic.IEnumerable{System.Collections.Generic.KeyValuePair{System.String,System.String}})">
             <summary>
             ConfigurationAddUpdate
             </summary>
@@ -67,6 +67,13 @@
             </summary>
             <param name="model"></param>
             <returns>True if created, false if updated</returns>
+        </member>
+        <member name="M:BlitzkriegSoftware.Tenant.FileProvider.JsonFileProvider.TenantGet(System.Guid)">
+            <summary>
+            Tenant Get
+            </summary>
+            <param name="tenantId"></param>
+            <returns>Tenant Model</returns>
         </member>
         <member name="M:BlitzkriegSoftware.Tenant.FileProvider.JsonFileProvider.TenantDelete(System.Guid)">
             <summary>

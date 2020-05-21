@@ -22,7 +22,7 @@ namespace BlitzkriegSoftware.Tenant.Libary
         /// <param name="tenantId">Primary Key</param>
         /// <param name="contact"></param>
         /// <returns></returns>
-        bool ContactAddUpdate(Guid tenantId, ITenantContact contact);
+        void ContactUpdate(Guid tenantId, ITenantContact contact);
 
         /// <summary>
         /// Fetch Configuration
@@ -46,7 +46,7 @@ namespace BlitzkriegSoftware.Tenant.Libary
         /// <param name="tenantId">Primary Key</param>
         /// <param name="config">Configuration as used by <c>Microsoft.Extensions.Configuration</c> <c>MemoryCollection</c></param>
         /// <returns></returns>
-        bool ConfigurationAddUpdate(Guid tenantId, IEnumerable<KeyValuePair<string, string>> config);
+        void ConfigurationUpdate(Guid tenantId, IEnumerable<KeyValuePair<string, string>> config);
 
         /// <summary>
         /// Does Tenant Exist
@@ -61,6 +61,13 @@ namespace BlitzkriegSoftware.Tenant.Libary
         /// <param name="model">ITenantModel</param>
         /// <returns>True if created, False if updated</returns>
         bool TenantAddUpdate(ITenantModel model);
+
+        /// <summary>
+        /// Get entire tenant
+        /// </summary>
+        /// <param name="tenantId">Id</param>
+        /// <returns>Tenant Model</returns>
+        ITenantModel TenantGet(Guid tenantId);
 
         /// <summary>
         /// Delete Tenant

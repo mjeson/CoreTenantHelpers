@@ -1,0 +1,31 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <Copyright>Copyright © 2016-2020 Blitzkrieg Software</Copyright>
+    <Company>Blitzkrieg Software</Company>
+    <Description>Tenant File Provider Tests</Description>
+    <InformationalVersion>3.1.0</InformationalVersion>
+    <FileVersion>3.1.0</FileVersion>
+    <AssemblyVersion>3.1.0</AssemblyVersion>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="BlitzkriegSoftware.MsTest" Version="1.0.2" />
+    <PackageReference Include="Faker.Data.Core" Version="1.0.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.6.1" />
+    <PackageReference Include="MSTest.TestAdapter" Version="2.1.1" />
+    <PackageReference Include="MSTest.TestFramework" Version="2.1.1" />
+    <PackageReference Include="coverlet.collector" Version="1.2.1">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\BlitzkriegSoftware.Tenant.FileProvider\BlitzkriegSoftware.Tenant.FileProvider.csproj" />
+    <ProjectReference Include="..\BlitzkriegSoftware.Tenant.Libary\BlitzkriegSoftware.Tenant.Libary.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -16,7 +16,7 @@
             <param name="tenantId">Primary Key</param>
             <returns>ITenantContact</returns>
         </member>
-        <member name="M:BlitzkriegSoftware.Tenant.Libary.ITenantProvider.ContactAddUpdate(System.Guid,BlitzkriegSoftware.Tenant.Libary.Models.ITenantContact)">
+        <member name="M:BlitzkriegSoftware.Tenant.Libary.ITenantProvider.ContactUpdate(System.Guid,BlitzkriegSoftware.Tenant.Libary.Models.ITenantContact)">
             <summary>
             
             </summary>
@@ -40,7 +40,7 @@
             <param name="startsWith">Filter down to keys that `start with` (empty is all config)</param>
             <returns></returns>
         </member>
-        <member name="M:BlitzkriegSoftware.Tenant.Libary.ITenantProvider.ConfigurationAddUpdate(System.Guid,System.Collections.Generic.IEnumerable{System.Collections.Generic.KeyValuePair{System.String,System.String}})">
+        <member name="M:BlitzkriegSoftware.Tenant.Libary.ITenantProvider.ConfigurationUpdate(System.Guid,System.Collections.Generic.IEnumerable{System.Collections.Generic.KeyValuePair{System.String,System.String}})">
             <summary>
             Adds/Updates configuration for a tenant
             </summary>
@@ -61,6 +61,13 @@
             </summary>
             <param name="model">ITenantModel</param>
             <returns>True if created, False if updated</returns>
+        </member>
+        <member name="M:BlitzkriegSoftware.Tenant.Libary.ITenantProvider.TenantGet(System.Guid)">
+            <summary>
+            Get entire tenant
+            </summary>
+            <param name="tenantId">Id</param>
+            <returns>Tenant Model</returns>
         </member>
         <member name="M:BlitzkriegSoftware.Tenant.Libary.ITenantProvider.TenantDelete(System.Guid)">
             <summary>

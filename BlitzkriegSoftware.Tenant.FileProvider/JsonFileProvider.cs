@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -16,6 +17,7 @@ namespace BlitzkriegSoftware.Tenant.FileProvider
     {
         private readonly DirectoryInfo _rootFolder;
 
+        [ExcludeFromCodeCoverage]
         private JsonFileProvider() { }
 
         /// <summary>
@@ -40,10 +42,12 @@ namespace BlitzkriegSoftware.Tenant.FileProvider
             }
 
             var model = this.Read(tenantId);
+
             if (model == null)
             {
                 throw new InvalidOperationException($"Contact Not Found for {tenantId}");
             }
+
             return model.Contact;
         }
 
@@ -53,9 +57,8 @@ namespace BlitzkriegSoftware.Tenant.FileProvider
         /// <param name="tenantId">Key</param>
         /// <param name="contact">Contact</param>
         /// <returns>True if existed, false if new</returns>
-        public bool ContactAddUpdate(Guid tenantId, ITenantContact contact)
+        public void ContactUpdate(Guid tenantId, ITenantContact contact)
         {
-            var exists = true;
             if (tenantId == Guid.Empty)
             {
                 throw new ArgumentException("Tenant Must be Supplied", nameof(tenantId));
@@ -64,13 +67,10 @@ namespace BlitzkriegSoftware.Tenant.FileProvider
             var model = this.Read(tenantId);
             if (model == null)
             {
-                exists = false;
-                model = new TenantBase();
-                model.Configuration = new List<KeyValuePair<string, string>>();
+                throw new InvalidOperationException($"No tenant found for {tenantId}");
             }
             model.Contact = contact;
             this.Write(model);
-            return exists;
         }
 
         /// <summary>
@@ -92,10 +92,11 @@ namespace BlitzkriegSoftware.Tenant.FileProvider
                 throw new InvalidOperationException($"Config Not Found for {tenantId}");
             }
 
-            if(keys == null)
+            if ((keys == null) || (keys.Count() <= 0))
             {
                 return model.Configuration;
-            } else
+            }
+            else
             {
                 return model.Configuration.Where(k => keys.Contains(k.Key));
             }
@@ -115,7 +116,7 @@ namespace BlitzkriegSoftware.Tenant.FileProvider
             }
 
             var model = this.Read(tenantId);
-            if(model == null)
+            if (model == null)
             {
                 throw new InvalidOperationException($"Config Not Found for {tenantId}");
             }
@@ -123,7 +124,8 @@ namespace BlitzkriegSoftware.Tenant.FileProvider
             if (string.IsNullOrEmpty(startsWith))
             {
                 return model.Configuration;
-            } else
+            }
+            else
             {
                 return model.Configuration.Where(k => k.Key.StartsWith(startsWith));
             }
@@ -135,29 +137,27 @@ namespace BlitzkriegSoftware.Tenant.FileProvider
         /// <param name="tenantId">Tenant Id</param>
         /// <param name="config">Configuration is entirely replaced</param>
         /// <returns>True if existed</returns>
-        public bool ConfigurationAddUpdate(Guid tenantId, IEnumerable<KeyValuePair<string, string>> config)
+        public void ConfigurationUpdate(Guid tenantId, IEnumerable<KeyValuePair<string, string>> config)
         {
-            if(tenantId == Guid.Empty)
+            if (tenantId == Guid.Empty)
             {
                 throw new ArgumentException("Tenant Must be Supplied", nameof(tenantId));
             }
 
-            if(config == null)
+            if (config == null)
             {
                 throw new ArgumentNullException(nameof(config));
             }
 
-            var exists = true;
             var model = this.Read(tenantId);
-            if(model == null)
+
+            if (model == null)
             {
-                exists = false;
-                model = new TenantBase();
-                model.Contact = new ContactBase() { TenantId = tenantId, DisplayName = tenantId.ToString() };
+                throw new InvalidOperationException($"Tenant not found for {tenantId}");
             }
+
             model.Configuration = config;
             this.Write(model);
-            return exists;
         }
 
         /// <summary>
@@ -171,7 +171,7 @@ namespace BlitzkriegSoftware.Tenant.FileProvider
             {
                 var filename = Path.Combine(this._rootFolder.FullName, $"{tenantId}.json");
                 return (File.Exists(filename));
-            } 
+            }
             return false;
         }
 
@@ -202,9 +202,19 @@ namespace BlitzkriegSoftware.Tenant.FileProvider
                 throw new ArgumentException($"A model must contain a `TenantId`", nameof(model));
             }
 
-            var exists = !this.TenantExists(model.Contact.TenantId);
-            this.Write((TenantBase) model);
+            var exists = this.TenantExists(model.Contact.TenantId);
+            this.Write((TenantBase)model);
             return exists;
+        }
+
+        /// <summary>
+        /// Tenant Get
+        /// </summary>
+        /// <param name="tenantId"></param>
+        /// <returns>Tenant Model</returns>
+        public ITenantModel TenantGet(Guid tenantId)
+        {
+            return this.Read(tenantId);
         }
 
         /// <summary>
@@ -227,6 +237,7 @@ namespace BlitzkriegSoftware.Tenant.FileProvider
             return false;
         }
 
+        [ExcludeFromCodeCoverage]
         private TenantBase Read(Guid tenantId)
         {
             TenantBase model = null;
@@ -237,13 +248,17 @@ namespace BlitzkriegSoftware.Tenant.FileProvider
                 if (File.Exists(filename))
                 {
                     var json = File.ReadAllText(filename);
-                    model = JsonConvert.DeserializeObject<TenantBase>(json);
+                    model = JsonConvert.DeserializeObject<TenantBase>(json, new JsonSerializerSettings
+                    {
+                        // Ignore Interface
+                        TypeNameHandling = TypeNameHandling.Objects
+                    });
                 }
             }
-
             return model;
         }
 
+        [ExcludeFromCodeCoverage]
         private void Write(TenantBase model)
         {
             if (model == null)
@@ -272,9 +287,15 @@ namespace BlitzkriegSoftware.Tenant.FileProvider
                 if (File.Exists(filename))
                 {
                     File.Delete(filename);
-                    var json = JsonConvert.SerializeObject(model);
-                    File.WriteAllText(filename, json);
                 }
+
+                string json = JsonConvert.SerializeObject(model, Formatting.Indented, new JsonSerializerSettings
+                {
+                    // Ignore Interface
+                    TypeNameHandling = TypeNameHandling.Objects
+                });
+
+                File.WriteAllText(filename, json);
             }
         }
 
