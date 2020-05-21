@@ -91,7 +91,7 @@ namespace BlitzkriegSoftware.Tenant.FileProvider.Test
 
         [TestMethod]
         [TestCategory("Unit")]
-        public void Test_Data_Exists()
+        public void Test_Data_Ok_1()
         {
             var di = new DirectoryInfo(Test_Data_Folder);
             var ct = di.GetFiles("*.json").Length;
@@ -144,6 +144,24 @@ namespace BlitzkriegSoftware.Tenant.FileProvider.Test
             var tp = new JsonFileProvider(new DirectoryInfo(Test_Data_Folder));
             var id = Tenants[0];
             Assert.IsTrue(tp.TenantExists(id));
+        }
+
+        [TestMethod]
+        [TestCategory("Unit")]
+        public void Test_TenantExists_Bad_1()
+        {
+            var tp = new JsonFileProvider(new DirectoryInfo(Test_Data_Folder));
+            var id = Guid.Empty;
+            Assert.IsFalse(tp.TenantExists(id));
+        }
+
+        [TestMethod]
+        [TestCategory("Unit")]
+        public void Test_TenantExists_Bad_2()
+        {
+            var tp = new JsonFileProvider(new DirectoryInfo(Test_Data_Folder));
+            var id = Guid.NewGuid();
+            Assert.IsFalse(tp.TenantExists(id));
         }
 
         [TestMethod]
