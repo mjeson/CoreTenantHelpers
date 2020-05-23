@@ -1,0 +1,98 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>BlitzkriegSoftware.Tenant.MongoProvider</name>
+    </assembly>
+    <members>
+        <member name="T:BlitzkriegSoftware.Tenant.MongoProvider.Models.MongoConfiguration">
+            <summary>
+            Configuration: Mongo DB
+            </summary>
+        </member>
+        <member name="P:BlitzkriegSoftware.Tenant.MongoProvider.Models.MongoConfiguration.AuthMechanism">
+            <summary>
+            Auth Mechanism
+            </summary>
+        </member>
+        <member name="P:BlitzkriegSoftware.Tenant.MongoProvider.Models.MongoConfiguration.Port">
+            <summary>
+            Port
+            </summary>
+        </member>
+        <member name="P:BlitzkriegSoftware.Tenant.MongoProvider.Models.MongoConfiguration.Host">
+            <summary>
+            Host
+            </summary>
+        </member>
+        <member name="P:BlitzkriegSoftware.Tenant.MongoProvider.Models.MongoConfiguration.Database">
+            <summary>
+            Database
+            </summary>
+        </member>
+        <member name="P:BlitzkriegSoftware.Tenant.MongoProvider.Models.MongoConfiguration.Collection">
+            <summary>
+            Collection
+            </summary>
+        </member>
+        <member name="P:BlitzkriegSoftware.Tenant.MongoProvider.Models.MongoConfiguration.Password">
+            <summary>
+            Password
+            </summary>
+        </member>
+        <member name="P:BlitzkriegSoftware.Tenant.MongoProvider.Models.MongoConfiguration.Username">
+            <summary>
+            Username
+            </summary>
+        </member>
+        <member name="M:BlitzkriegSoftware.Tenant.MongoProvider.Models.MongoConfiguration.ToString">
+            <summary>
+            MongoDB Connection String
+            </summary>
+            <returns>(sic)</returns>
+        </member>
+        <member name="T:BlitzkriegSoftware.Tenant.MongoProvider.MongoTenantDataProvider`1">
+            <summary>
+            Tenant Data Provider: MongoDB
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="M:BlitzkriegSoftware.Tenant.MongoProvider.MongoTenantDataProvider`1.#ctor(BlitzkriegSoftware.Tenant.MongoProvider.Models.MongoConfiguration)">
+            <summary>
+            CTOR
+            </summary>
+        </member>
+        <member name="M:BlitzkriegSoftware.Tenant.MongoProvider.MongoTenantDataProvider`1.MongoConnection">
+            <summary>
+            Get Tenant Collection
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:BlitzkriegSoftware.Tenant.MongoProvider.MongoTenantDataProvider`1.Read(System.Guid)">
+            <summary>
+            Read
+            </summary>
+            <param name="id">Key</param>
+            <returns>Tenant of Type T</returns>
+        </member>
+        <member name="M:BlitzkriegSoftware.Tenant.MongoProvider.MongoTenantDataProvider`1.Write(`0)">
+            <summary>
+            Write
+            </summary>
+            <param name="model">Tenant of Type T</param>
+        </member>
+        <member name="M:BlitzkriegSoftware.Tenant.MongoProvider.MongoTenantDataProvider`1.Exists(System.Guid)">
+            <summary>
+            Exists
+            </summary>
+            <param name="id">Key</param>
+            <returns>True if so</returns>
+        </member>
+        <member name="M:BlitzkriegSoftware.Tenant.MongoProvider.MongoTenantDataProvider`1.Delete(System.Guid)">
+            <summary>
+            Delete
+            </summary>
+            <param name="id">Key</param>
+            <returns>True if so</returns>
+        </member>
+    </members>
+</doc>

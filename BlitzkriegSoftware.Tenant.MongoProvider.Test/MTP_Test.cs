@@ -1,22 +1,23 @@
 using BlitzkriegSoftware.Tenant.Libary;
 using BlitzkriegSoftware.Tenant.Libary.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using MongoDB.Bson;
+using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using System.IO;
 using System.Linq;
 
-namespace BlitzkriegSoftware.Tenant.FileProvider.Test
+namespace BlitzkriegSoftware.Tenant.MongoProvider.Test
 {
     [TestClass]
-    [ExcludeFromCodeCoverage]
-    public class JFP_Test
+    public class MTP_Test
     {
-        #region "Constants and TenantProvider"
-        private const string Test_Data_Folder = @"c:\temp\tenants";
+        #region "Constants and Tenant Providers"
+        private const string Test_Mongo_ConnectionString = @"mongodb://mongoadmin:Secret@localhost:27017";
+        private const string Test_Mongo_Database = "TenantProvider";
+        private const string Test_Mongo_Collection = "Tenants";
         private const int Test_Cases_Count = 10;
-        private readonly static List<string> ConfigKeys = new List<string>() { "SqlConnection", "TenantFeatures", "TenantLevel", "LogoFile" };
+        private readonly static List<string> ConfigKeys = new List<string>() { "MongoConnection", "TenantFeatures", "TenantLevel", "LogoFile" };
 
         private static TenantProvider<TenantBase> tp = null;
         #endregion
@@ -28,17 +29,11 @@ namespace BlitzkriegSoftware.Tenant.FileProvider.Test
         [ClassInitialize]
         public static void InitClass(TestContext testContext)
         {
-            Context = testContext;
-
-            if (Directory.Exists(Test_Data_Folder))
-            {
-                Directory.Delete(Test_Data_Folder, true);
-            }
-            Directory.CreateDirectory(Test_Data_Folder);
-
-            var tdp = new FileTenantDataProvider<TenantBase>(Test_Data_Folder);
+            var config = new Models.MongoConfiguration();
+            var tdp = new MongoTenantDataProvider<TenantBase>(config);
             tp = new TenantProvider<TenantBase>(tdp);
-            
+
+            Context = testContext;
             MakeTenants(Test_Cases_Count);
         }
         #endregion
@@ -53,7 +48,7 @@ namespace BlitzkriegSoftware.Tenant.FileProvider.Test
                 var model = new TenantBase
                 {
                     _id = tenantId,
-                    Contact = new ContactBase() {  DisplayName = tenantId.ToString(), ContactEmail = $"{tenantId}@my.co", ContactName = $"", ContactPhone = "" }
+                    Contact = new ContactBase() { DisplayName = tenantId.ToString(), ContactEmail = $"{tenantId}@my.co", ContactName = $"", ContactPhone = "" }
                 };
                 var config = new List<KeyValuePair<string, string>>();
                 foreach (var k in ConfigKeys)
@@ -85,26 +80,17 @@ namespace BlitzkriegSoftware.Tenant.FileProvider.Test
         {
             get
             {
-                if (JFP_Test._tenants == null)
+                if (MTP_Test._tenants == null)
                 {
-                    JFP_Test._tenants = new List<Guid>();
+                    MTP_Test._tenants = new List<Guid>();
                 }
-                return JFP_Test._tenants;
+                return MTP_Test._tenants;
             }
         }
 
         #endregion
 
         #region "Tests"
-
-        [TestMethod]
-        [TestCategory("Unit")]
-        public void Test_Data_Ok_1()
-        {
-            var di = new DirectoryInfo(Test_Data_Folder);
-            var ct = di.GetFiles("*.json").Length;
-            Assert.IsTrue(ct > 0);
-        }
 
         [TestMethod]
         [TestCategory("Unit")]
@@ -229,7 +215,7 @@ namespace BlitzkriegSoftware.Tenant.FileProvider.Test
             var keys = new List<string>() { "TenantLevel", "LogoFile" };
             var model = tp.ConfigurationGet(id, keys);
             Assert.IsNotNull(model);
-            Assert.AreEqual( 2, model.Count());
+            Assert.AreEqual(2, model.Count());
         }
 
         [TestMethod]
@@ -240,7 +226,7 @@ namespace BlitzkriegSoftware.Tenant.FileProvider.Test
             var keys = new List<string>();
             var model = tp.ConfigurationGet(id, keys);
             Assert.IsNotNull(model);
-            Assert.AreEqual( 4, model.Count());
+            Assert.AreEqual(4, model.Count());
         }
 
         [TestMethod]
@@ -289,9 +275,9 @@ namespace BlitzkriegSoftware.Tenant.FileProvider.Test
             var model = MakeConfigs();
             tp.ConfigurationUpdate(id, model);
             var model2 = tp.ConfigurationGet(id, string.Empty);
-            foreach(var k in model)
+            foreach (var k in model)
             {
-                if(!model2.Contains(k))
+                if (!model2.Contains(k))
                 {
                     Assert.Fail($"Missing Key {k}");
                 }

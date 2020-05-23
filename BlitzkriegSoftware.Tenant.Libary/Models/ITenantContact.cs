@@ -9,12 +9,6 @@ namespace BlitzkriegSoftware.Tenant.Libary.Models
     /// </summary>
     public interface ITenantContact
     {
-        /// <summary>
-        /// Key
-        /// </summary>
-        [Key]
-        [Required]
-        Guid TenantId { get; set; }
 
         /// <summary>
         /// Tenant Display Name

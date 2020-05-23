@@ -1,33 +1,35 @@
-﻿using System;
+﻿using BlitzkriegSoftware.Tenant.Libary.Models;
+using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using System.IO;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using BlitzkriegSoftware.Tenant.Libary;
-using BlitzkriegSoftware.Tenant.Libary.Models;
-using Newtonsoft.Json;
+using System.Text;
 
-namespace BlitzkriegSoftware.Tenant.FileProvider
+namespace BlitzkriegSoftware.Tenant.Libary
 {
     /// <summary>
-    /// Tenant Provider: Json Files
+    /// Tenant Provider
     /// </summary>
-    public class JsonFileProvider : ITenantProvider
+    /// <typeparam name="T"></typeparam>
+    public class TenantProvider<T> where T : ITenantModel, new()
     {
-        private readonly DirectoryInfo _rootFolder;
+        #region "Constants"
+        private readonly ITenantDataProvider<T> _dataProvider;
+        #endregion
 
-        [ExcludeFromCodeCoverage]
-        private JsonFileProvider() { }
+        #region "CTOR"
+        private TenantProvider() { }
 
         /// <summary>
         /// CTOR
         /// </summary>
-        /// <param name="rootFolder"></param>
-        public JsonFileProvider(DirectoryInfo rootFolder)
+        /// <param name="dataProvider"></param>
+        public TenantProvider(ITenantDataProvider<T> dataProvider)
         {
-            this._rootFolder = rootFolder;
+            this._dataProvider = dataProvider;
         }
+        #endregion
+
+        #region "ITenantProvider"
 
         /// <summary>
         /// Contact Get
@@ -41,7 +43,7 @@ namespace BlitzkriegSoftware.Tenant.FileProvider
                 throw new ArgumentException("Tenant Must be Supplied", nameof(tenantId));
             }
 
-            var model = this.Read(tenantId);
+            var model = this._dataProvider.Read(tenantId);
 
             if (model == null)
             {
@@ -56,7 +58,6 @@ namespace BlitzkriegSoftware.Tenant.FileProvider
         /// </summary>
         /// <param name="tenantId">Key</param>
         /// <param name="contact">Contact</param>
-        /// <returns>True if existed, false if new</returns>
         public void ContactUpdate(Guid tenantId, ITenantContact contact)
         {
             if (tenantId == Guid.Empty)
@@ -64,13 +65,13 @@ namespace BlitzkriegSoftware.Tenant.FileProvider
                 throw new ArgumentException("Tenant Must be Supplied", nameof(tenantId));
             }
 
-            var model = this.Read(tenantId);
+            var model = this._dataProvider.Read(tenantId);
             if (model == null)
             {
                 throw new InvalidOperationException($"No tenant found for {tenantId}");
             }
             model.Contact = contact;
-            this.Write(model);
+            this._dataProvider.Write(model);
         }
 
         /// <summary>
@@ -86,7 +87,7 @@ namespace BlitzkriegSoftware.Tenant.FileProvider
                 throw new ArgumentException("Tenant Must be Supplied", nameof(tenantId));
             }
 
-            var model = this.Read(tenantId);
+            var model = this._dataProvider.Read(tenantId);
             if (model == null)
             {
                 throw new InvalidOperationException($"Config Not Found for {tenantId}");
@@ -115,7 +116,7 @@ namespace BlitzkriegSoftware.Tenant.FileProvider
                 throw new ArgumentException("Tenant Must be Supplied", nameof(tenantId));
             }
 
-            var model = this.Read(tenantId);
+            var model = this._dataProvider.Read(tenantId);
             if (model == null)
             {
                 throw new InvalidOperationException($"Config Not Found for {tenantId}");
@@ -136,7 +137,6 @@ namespace BlitzkriegSoftware.Tenant.FileProvider
         /// </summary>
         /// <param name="tenantId">Tenant Id</param>
         /// <param name="config">Configuration is entirely replaced</param>
-        /// <returns>True if existed</returns>
         public void ConfigurationUpdate(Guid tenantId, IEnumerable<KeyValuePair<string, string>> config)
         {
             if (tenantId == Guid.Empty)
@@ -146,10 +146,12 @@ namespace BlitzkriegSoftware.Tenant.FileProvider
 
             if (config == null)
             {
+#pragma warning disable IDE0016 // Use 'throw' expression
                 throw new ArgumentNullException(nameof(config));
+#pragma warning restore IDE0016 // Use 'throw' expression
             }
 
-            var model = this.Read(tenantId);
+            var model = this._dataProvider.Read(tenantId);
 
             if (model == null)
             {
@@ -157,7 +159,7 @@ namespace BlitzkriegSoftware.Tenant.FileProvider
             }
 
             model.Configuration = config;
-            this.Write(model);
+            this._dataProvider.Write(model);
         }
 
         /// <summary>
@@ -167,12 +169,7 @@ namespace BlitzkriegSoftware.Tenant.FileProvider
         /// <returns>True if exists</returns>
         public bool TenantExists(Guid tenantId)
         {
-            if (this._rootFolder.Exists)
-            {
-                var filename = Path.Combine(this._rootFolder.FullName, $"{tenantId}.json");
-                return (File.Exists(filename));
-            }
-            return false;
+            return this._dataProvider.Exists(tenantId);
         }
 
         /// <summary>
@@ -197,13 +194,13 @@ namespace BlitzkriegSoftware.Tenant.FileProvider
                 model.Contact = new ContactBase();
             }
 
-            if (model.Contact.TenantId == Guid.Empty)
+            if (model._id == Guid.Empty)
             {
                 throw new ArgumentException($"A model must contain a `TenantId`", nameof(model));
             }
 
-            var exists = this.TenantExists(model.Contact.TenantId);
-            this.Write((TenantBase)model);
+            bool exists = this.TenantExists(model._id);
+            this._dataProvider.Write((T)model);
             return exists;
         }
 
@@ -214,7 +211,7 @@ namespace BlitzkriegSoftware.Tenant.FileProvider
         /// <returns>Tenant Model</returns>
         public ITenantModel TenantGet(Guid tenantId)
         {
-            return this.Read(tenantId);
+            return this._dataProvider.Read(tenantId);
         }
 
         /// <summary>
@@ -222,82 +219,13 @@ namespace BlitzkriegSoftware.Tenant.FileProvider
         /// <para>Warning! Destructive!</para>
         /// </summary>
         /// <param name="tenantId"></param>
-        /// <returns></returns>
+        /// <returns>True is delete success</returns>
         public bool TenantDelete(Guid tenantId)
         {
-            if (this._rootFolder.Exists)
-            {
-                var filename = Path.Combine(this._rootFolder.FullName, $"{tenantId}.json");
-                if (File.Exists(filename))
-                {
-                    File.Delete(filename);
-                    return true;
-                }
-            }
-            return false;
+            return this._dataProvider.Delete(tenantId);
         }
 
-        [ExcludeFromCodeCoverage]
-        private TenantBase Read(Guid tenantId)
-        {
-            TenantBase model = null;
-
-            if (this._rootFolder.Exists)
-            {
-                var filename = Path.Combine(this._rootFolder.FullName, $"{tenantId}.json");
-                if (File.Exists(filename))
-                {
-                    var json = File.ReadAllText(filename);
-                    model = JsonConvert.DeserializeObject<TenantBase>(json, new JsonSerializerSettings
-                    {
-                        // Ignore Interface
-                        TypeNameHandling = TypeNameHandling.Objects
-                    });
-                }
-            }
-            return model;
-        }
-
-        [ExcludeFromCodeCoverage]
-        private void Write(TenantBase model)
-        {
-            if (model == null)
-            {
-                throw new ArgumentNullException(nameof(model));
-            }
-
-            if (model.Configuration == null)
-            {
-                model.Configuration = new List<KeyValuePair<string, string>>();
-            }
-
-            if (model.Contact == null)
-            {
-                model.Contact = new ContactBase();
-            }
-
-            if (model.Contact.TenantId == Guid.Empty)
-            {
-                throw new ArgumentException($"A model must contain a `TenantId`", nameof(model));
-            }
-
-            if (this._rootFolder.Exists)
-            {
-                var filename = Path.Combine(this._rootFolder.FullName, $"{model.Contact.TenantId}.json");
-                if (File.Exists(filename))
-                {
-                    File.Delete(filename);
-                }
-
-                string json = JsonConvert.SerializeObject(model, Formatting.Indented, new JsonSerializerSettings
-                {
-                    // Ignore Interface
-                    TypeNameHandling = TypeNameHandling.Objects
-                });
-
-                File.WriteAllText(filename, json);
-            }
-        }
+        #endregion
 
     }
 }

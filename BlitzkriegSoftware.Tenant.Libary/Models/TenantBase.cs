@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace BlitzkriegSoftware.Tenant.Libary.Models
 {
@@ -7,6 +9,13 @@ namespace BlitzkriegSoftware.Tenant.Libary.Models
     /// </summary>
     public class TenantBase : ITenantModel
     {
+        /// <summary>
+        /// Key
+        /// </summary>
+        [Key]
+        [Required]
+        public Guid _id { get; set; }
+
         /// <summary>
         /// Contact
         /// </summary>
