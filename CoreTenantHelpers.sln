@@ -18,9 +18,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlitzkriegSoftware.Tenant.F
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlitzkriegSoftware.Tenant.FileProvider.Test", "BlitzkriegSoftware.Tenant.FileProvider.Test\BlitzkriegSoftware.Tenant.FileProvider.Test.csproj", "{09CA336E-DCEA-46B8-AC8A-98239DC57909}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlitzkriegSoftware.Tenant.MongoProvider", "BlitzkriegSoftware.Tenant.MongoProvider\BlitzkriegSoftware.Tenant.MongoProvider.csproj", "{4BB1A3BA-2E79-480B-8536-5CECEBFF157B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlitzkriegSoftware.Tenant.MongoProvider", "BlitzkriegSoftware.Tenant.MongoProvider\BlitzkriegSoftware.Tenant.MongoProvider.csproj", "{4BB1A3BA-2E79-480B-8536-5CECEBFF157B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlitzkriegSoftware.Tenant.MongoProvider.Test", "BlitzkriegSoftware.Tenant.MongoProvider.Test\BlitzkriegSoftware.Tenant.MongoProvider.Test.csproj", "{04B8C63E-AF62-4EE7-837A-CD4A8CB5190F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlitzkriegSoftware.Tenant.MongoProvider.Test", "BlitzkriegSoftware.Tenant.MongoProvider.Test\BlitzkriegSoftware.Tenant.MongoProvider.Test.csproj", "{04B8C63E-AF62-4EE7-837A-CD4A8CB5190F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlitzkriegSoftware.Tenant.Demo.Web", "BlitzkriegSoftware.Tenant.Demo.Web\BlitzkriegSoftware.Tenant.Demo.Web.csproj", "{431B73F9-2A2D-4CDF-BF9E-324F4BF06289}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -92,6 +94,18 @@ Global
 		{04B8C63E-AF62-4EE7-837A-CD4A8CB5190F}.Release|x64.Build.0 = Release|Any CPU
 		{04B8C63E-AF62-4EE7-837A-CD4A8CB5190F}.Release|x86.ActiveCfg = Release|Any CPU
 		{04B8C63E-AF62-4EE7-837A-CD4A8CB5190F}.Release|x86.Build.0 = Release|Any CPU
+		{431B73F9-2A2D-4CDF-BF9E-324F4BF06289}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{431B73F9-2A2D-4CDF-BF9E-324F4BF06289}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{431B73F9-2A2D-4CDF-BF9E-324F4BF06289}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{431B73F9-2A2D-4CDF-BF9E-324F4BF06289}.Debug|x64.Build.0 = Debug|Any CPU
+		{431B73F9-2A2D-4CDF-BF9E-324F4BF06289}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{431B73F9-2A2D-4CDF-BF9E-324F4BF06289}.Debug|x86.Build.0 = Debug|Any CPU
+		{431B73F9-2A2D-4CDF-BF9E-324F4BF06289}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{431B73F9-2A2D-4CDF-BF9E-324F4BF06289}.Release|Any CPU.Build.0 = Release|Any CPU
+		{431B73F9-2A2D-4CDF-BF9E-324F4BF06289}.Release|x64.ActiveCfg = Release|Any CPU
+		{431B73F9-2A2D-4CDF-BF9E-324F4BF06289}.Release|x64.Build.0 = Release|Any CPU
+		{431B73F9-2A2D-4CDF-BF9E-324F4BF06289}.Release|x86.ActiveCfg = Release|Any CPU
+		{431B73F9-2A2D-4CDF-BF9E-324F4BF06289}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
