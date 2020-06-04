@@ -1,5 +1,4 @@
 ﻿using BlitzkriegSoftware.Tenant.Libary;
-using BlitzkriegSoftware.Tenant.Libary.Models;
 using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
@@ -8,10 +7,10 @@ using System.Diagnostics.CodeAnalysis;
 namespace BlitzkriegSoftware.Tenant.MongoProvider
 {
     /// <summary>
-    /// Tenant Data Provider: MongoDB
+    /// Mongo: Tenant User Provider
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public class MongoTenantDataProvider<T> : ITenantDataProvider<T> where T : ITenantModel, new()
+    public class MongoTenantUserProfileProvider<T> : ITenantUserProfileProvider<T> where T : ITenantUserProfile, new()
     {
         #region "publics, etc."
         private readonly Models.MongoConfiguration _config;
@@ -19,12 +18,12 @@ namespace BlitzkriegSoftware.Tenant.MongoProvider
 
         #region "ctor"
         [ExcludeFromCodeCoverage] 
-        private MongoTenantDataProvider() { }
+        private MongoTenantUserProfileProvider() { }
 
         /// <summary>
         /// CTOR
         /// </summary>
-        public MongoTenantDataProvider(Models.MongoConfiguration config)
+        public MongoTenantUserProfileProvider(Models.MongoConfiguration config)
         {
             this._config = config;
         }
@@ -75,13 +74,25 @@ namespace BlitzkriegSoftware.Tenant.MongoProvider
 
         #endregion
 
-        #region "Read/Write"
+        /// <summary>
+        /// Read a UserProfile
+        /// </summary>
+        /// <param name="uniqueUserId">User Id from AuthN</param>
+        /// <returns>UserProfile of Type T or Null</returns>
+        [ExcludeFromCodeCoverage]
+        public T Read(string uniqueUserId)
+        {
+            var model = default(T);
+            var coll = this.MongoConnection();
+            model = coll.Find(f => f.UniqueUserId == uniqueUserId).FirstOrDefault();
+            return model;
+        }
 
         /// <summary>
-        /// Read
+        /// Read a UserProfile
         /// </summary>
         /// <param name="id">Key</param>
-        /// <returns>Tenant of Type T</returns>
+        /// <returns>UserProfile of Type T or Null</returns>
         [ExcludeFromCodeCoverage]
         public T Read(Guid id)
         {
@@ -92,9 +103,9 @@ namespace BlitzkriegSoftware.Tenant.MongoProvider
         }
 
         /// <summary>
-        /// Write
+        /// Write UserProfile
         /// </summary>
-        /// <param name="model">Tenant of Type T</param>
+        /// <param name="model">UserProfile of Type T</param>
         [ExcludeFromCodeCoverage]
         public void Write(T model)
         {
@@ -103,31 +114,44 @@ namespace BlitzkriegSoftware.Tenant.MongoProvider
                 throw new ArgumentNullException(nameof(model));
             }
 
-            if (model.Configuration == null)
+            if (model.Tenants == null)
             {
-                model.Configuration = new List<KeyValuePair<string, string>>();
+                model.Tenants = new List<Guid>();
             }
 
-            if (model.Contact == null)
+            if (model.Settings == null)
             {
-                model.Contact = new ContactBase();
+                model.Settings = new Dictionary<string, object>();
             }
 
-            if (model._id == Guid.Empty)
+            if (string.IsNullOrWhiteSpace(model.UniqueUserId))
             {
-                throw new ArgumentException($"A model must contain a `TenantId`", nameof(model));
+                throw new ArgumentException($"A model must contain a `UniqueUserId`", nameof(model));
             }
 
             var coll = this.MongoConnection();
 
             var replaceOneResult = coll.ReplaceOneAsync(
-                f => f._id == model._id,
+                f => f.UniqueUserId == model.UniqueUserId,
                 model,
                 new ReplaceOptions { IsUpsert = true }).GetAwaiter().GetResult();
         }
 
         /// <summary>
-        /// Exists
+        /// Does UserProfile Exist?
+        /// </summary>
+        /// <param name="uniqueUserId">User Id from AuthN</param>
+        /// <returns>True if so</returns>
+        [ExcludeFromCodeCoverage]
+        public bool Exists(string uniqueUserId)
+        {
+            var coll = this.MongoConnection();
+            T model = coll.Find(f => f.UniqueUserId == uniqueUserId).FirstOrDefault();
+            return (model != null);
+        }
+
+        /// <summary>
+        /// Does UserProfile Exist?
         /// </summary>
         /// <param name="id">Key</param>
         /// <returns>True if so</returns>
@@ -140,7 +164,22 @@ namespace BlitzkriegSoftware.Tenant.MongoProvider
         }
 
         /// <summary>
-        /// Delete
+        /// Delete a UserProfile
+        /// <para>Warning Destructive</para>
+        /// </summary>
+        /// <param name="uniqueUserId">Key</param>
+        /// <returns>True if so</returns>
+        [ExcludeFromCodeCoverage]
+        public bool Delete(string uniqueUserId)
+        {
+            var coll = this.MongoConnection();
+            var result = coll.DeleteOneAsync(f => f.UniqueUserId == uniqueUserId).GetAwaiter().GetResult();
+            return result.IsAcknowledged && (result.DeletedCount > 0);
+        }
+
+        /// <summary>
+        /// Delete a UserProfile
+        /// <para>Warning Destructive</para>
         /// </summary>
         /// <param name="id">Key</param>
         /// <returns>True if so</returns>
@@ -151,8 +190,5 @@ namespace BlitzkriegSoftware.Tenant.MongoProvider
             var result = coll.DeleteOneAsync(f => f._id == id).GetAwaiter().GetResult();
             return result.IsAcknowledged && (result.DeletedCount > 0);
         }
-
-        #endregion
-
     }
 }

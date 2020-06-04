@@ -13,9 +13,6 @@ namespace BlitzkriegSoftware.Tenant.MongoProvider.Test
     public class MTP_Test
     {
         #region "Constants and Tenant Providers"
-        private const string Test_Mongo_ConnectionString = @"mongodb://mongoadmin:Secret@localhost:27017";
-        private const string Test_Mongo_Database = "TenantProvider";
-        private const string Test_Mongo_Collection = "Tenants";
         private const int Test_Cases_Count = 10;
         private readonly static List<string> ConfigKeys = new List<string>() { "MongoConnection", "TenantFeatures", "TenantLevel", "LogoFile" };
 
@@ -29,7 +26,12 @@ namespace BlitzkriegSoftware.Tenant.MongoProvider.Test
         [ClassInitialize]
         public static void InitClass(TestContext testContext)
         {
-            var config = new Models.MongoConfiguration();
+            var config = new Models.MongoConfiguration()
+            {
+                Database = "TenantProvider",
+                Collection = "Tenants"
+            };
+
             var tdp = new MongoTenantDataProvider<TenantBase>(config);
             tp = new TenantProvider<TenantBase>(tdp);
 

@@ -110,6 +110,80 @@
             <param name="tenantId">Primary Key</param>
             <returns>True if deleted</returns>
         </member>
+        <member name="T:BlitzkriegSoftware.Tenant.Libary.ITenantUserProfile">
+            <summary>
+            Define the minimum data contract for a User Profile
+            <para>These are shared across tenants</para>
+            </summary>
+        </member>
+        <member name="P:BlitzkriegSoftware.Tenant.Libary.ITenantUserProfile._id">
+            <summary>
+            Key
+            </summary>
+        </member>
+        <member name="P:BlitzkriegSoftware.Tenant.Libary.ITenantUserProfile.UniqueUserId">
+            <summary>
+            Unique Identifier form AuthN
+            </summary>
+        </member>
+        <member name="P:BlitzkriegSoftware.Tenant.Libary.ITenantUserProfile.Tenants">
+            <summary>
+            List of tenants, should never be null, or empty
+            </summary>
+        </member>
+        <member name="P:BlitzkriegSoftware.Tenant.Libary.ITenantUserProfile.Settings">
+            <summary>
+            (optional) additional settings (including user info obtained from AuthN)
+            </summary>
+        </member>
+        <member name="P:BlitzkriegSoftware.Tenant.Libary.ITenantUserProfile.UserIsValid">
+            <summary>
+            Checks the information on this instance to make sure it is valid
+            </summary>
+        </member>
+        <member name="M:BlitzkriegSoftware.Tenant.Libary.ITenantUserProfile.SettingsPut(System.String,System.String)">
+            <summary>
+            Passed a name,value pair this attempts to add/update settings
+            <para>Mapping the name and transforming the value if required</para>
+            </summary>
+            <param name="key"></param>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="T:BlitzkriegSoftware.Tenant.Libary.ITenantUserProfileProvider`1">
+            <summary>
+            UserProfile User Profile Provider
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="M:BlitzkriegSoftware.Tenant.Libary.ITenantUserProfileProvider`1.Read(System.String)">
+            <summary>
+            Read a UserProfile
+            </summary>
+            <param name="id">Key</param>
+            <returns>UserProfile of Type T or Null</returns>
+        </member>
+        <member name="M:BlitzkriegSoftware.Tenant.Libary.ITenantUserProfileProvider`1.Write(`0)">
+            <summary>
+            Write UserProfile
+            </summary>
+            <param name="model">UserProfile of Type T</param>
+        </member>
+        <member name="M:BlitzkriegSoftware.Tenant.Libary.ITenantUserProfileProvider`1.Exists(System.String)">
+            <summary>
+            Does UserProfile Exist?
+            </summary>
+            <param name="id">Key</param>
+            <returns>True if so</returns>
+        </member>
+        <member name="M:BlitzkriegSoftware.Tenant.Libary.ITenantUserProfileProvider`1.Delete(System.String)">
+            <summary>
+            Delete a UserProfile
+            <para>Warning Destructive</para>
+            </summary>
+            <param name="id">Key</param>
+            <returns>True if so</returns>
+        </member>
         <member name="T:BlitzkriegSoftware.Tenant.Libary.Models.ContactBase">
             <summary>
             Model: Contact
@@ -204,6 +278,58 @@
             <summary>
             Configuration
             </summary>
+        </member>
+        <member name="T:BlitzkriegSoftware.Tenant.Libary.Models.TenantUserProfileBase">
+            <summary>
+            Base class that implements Tenant User Profile
+            </summary>
+        </member>
+        <member name="P:BlitzkriegSoftware.Tenant.Libary.Models.TenantUserProfileBase._id">
+            <summary>
+            Key
+            </summary>
+        </member>
+        <member name="P:BlitzkriegSoftware.Tenant.Libary.Models.TenantUserProfileBase.UniqueUserId">
+            <summary>
+            Unique Identifier from AuthN
+            </summary>
+        </member>
+        <member name="P:BlitzkriegSoftware.Tenant.Libary.Models.TenantUserProfileBase.Tenants">
+            <summary>
+            List of tenants, should never be null, or empty
+            </summary>
+        </member>
+        <member name="P:BlitzkriegSoftware.Tenant.Libary.Models.TenantUserProfileBase.Settings">
+            <summary>
+            (optional) additional settings (including user info obtained from AuthN)
+            </summary>
+        </member>
+        <member name="P:BlitzkriegSoftware.Tenant.Libary.Models.TenantUserProfileBase.UserIsValid">
+            <summary>
+            Checks the information on this instance to make sure it is valid
+            </summary>
+        </member>
+        <member name="M:BlitzkriegSoftware.Tenant.Libary.Models.TenantUserProfileBase.SettingsPut(System.String,System.String)">
+            <summary>
+            Passed a name,value pair this attempts to add/update settings
+            <para>Mapping the name and transforming the value if required</para>
+            </summary>
+            <param name="key">(sic)</param>
+            <param name="value">(sic)</param>
+            <returns>True if updated, False if added</returns>
+        </member>
+        <member name="M:BlitzkriegSoftware.Tenant.Libary.Models.TenantUserProfileBase.ToString">
+            <summary>
+            Debugging String
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:BlitzkriegSoftware.Tenant.Libary.Models.TenantUserProfileBase.Equals(System.Object)">
+            <summary>
+            Test Equality
+            </summary>
+            <param name="obj"></param>
+            <returns></returns>
         </member>
         <member name="T:BlitzkriegSoftware.Tenant.Libary.TenantProvider`1">
             <summary>

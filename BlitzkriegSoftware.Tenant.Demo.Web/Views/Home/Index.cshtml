@@ -41,18 +41,6 @@
                         </tr>
                     }
                 }
-                <tr><td colspan="2">Groups</td></tr>
-                @{
-
-                    string[] tenants = new string[] { "TenantA", "TenantB" };
-                    foreach (var t in tenants)
-                    {
-                        <tr>
-                            <td>@t</td>
-                            <td>@Model.IsInRole(t)</td>
-                        </tr>
-                    }
-                }
             </tbody>
         </table>
     </div>
