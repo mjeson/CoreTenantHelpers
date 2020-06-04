@@ -1,4 +1,6 @@
 ﻿using BlitzkriegSoftware.Tenant.Libary;
+using BlitzkriegSoftware.Tenant.Libary.Models;
+using MongoDB.Bson.Serialization;
 using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
@@ -66,6 +68,11 @@ namespace BlitzkriegSoftware.Tenant.MongoProvider
 
             var client = new MongoClient(settings);
 
+            if (!BsonClassMap.IsClassMapRegistered(typeof(TenantUserProfileBase)))
+            {
+                BsonClassMap.RegisterClassMap<TenantUserProfileBase>();
+            }
+
             var db = client.GetDatabase(this._config.Database);
             var coll = db.GetCollection<T>(this._config.Collection);
 
@@ -132,7 +139,7 @@ namespace BlitzkriegSoftware.Tenant.MongoProvider
             var coll = this.MongoConnection();
 
             var replaceOneResult = coll.ReplaceOneAsync(
-                f => f.UniqueUserId == model.UniqueUserId,
+                f => f._id == model._id,
                 model,
                 new ReplaceOptions { IsUpsert = true }).GetAwaiter().GetResult();
         }

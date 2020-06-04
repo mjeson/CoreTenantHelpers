@@ -1,5 +1,6 @@
 ﻿using BlitzkriegSoftware.Tenant.Libary;
 using BlitzkriegSoftware.Tenant.Libary.Models;
+using MongoDB.Bson.Serialization;
 using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
@@ -66,6 +67,16 @@ namespace BlitzkriegSoftware.Tenant.MongoProvider
             settings.Server = address;
 
             var client = new MongoClient(settings);
+
+            if (!BsonClassMap.IsClassMapRegistered(typeof(ContactBase)))
+            {
+                BsonClassMap.RegisterClassMap<ContactBase>();
+            }
+
+            if (!BsonClassMap.IsClassMapRegistered(typeof(TenantBase)))
+            {
+                BsonClassMap.RegisterClassMap<TenantBase>();
+            }
 
             var db = client.GetDatabase(this._config.Database);
             var coll = db.GetCollection<T>(this._config.Collection);

@@ -1,4 +1,4 @@
-﻿@model System.Security.Claims.ClaimsPrincipal
+﻿@model BlitzkriegSoftware.Tenant.Libary.Models.TenantUserProfileBase
 
 @{
     ViewData["Title"] = "Home Page";
@@ -20,28 +20,27 @@
 
             <tbody>
                 <tr>
-                    <td>Name</td>
-                    <td>@Model.Identity.Name</td>
+                    <td>Username</td>
+                    <td>@Model.UniqueUserId</td>
                 </tr>
                 <tr>
-                    <td>IsAuthenticated</td>
-                    <td>@Model.Identity.IsAuthenticated</td>
+                    <td>ID</td>
+                    <td>@Model._id</td>
                 </tr>
                 <tr>
-                    <td>AuthenticationType</td>
-                    <td>@Model.Identity.AuthenticationType</td>
+                    <td>Tenants</td>
+                    <td>@string.Join(",", Model.Tenants)</td>
                 </tr>
-                <tr><td colspan="2">Claims</td></tr>
-                @{
-                    foreach (var c in Model.Claims)
-                    {
-                        <tr>
-                            <td>@c.Type</td>
-                            <td><strong>@c.Value</strong></td>
-                        </tr>
-                    }
+                <tr><td colspan="2">Settings</td></tr>
+
+                @foreach (var s in Model.Settings.Keys)
+                {
+                    <tr>
+                        <td>@s</td>
+                        <td>@Model.Settings[s]</td>
+                    </tr>    
                 }
-            </tbody>
+                </tbody>
         </table>
     </div>
 </div>
