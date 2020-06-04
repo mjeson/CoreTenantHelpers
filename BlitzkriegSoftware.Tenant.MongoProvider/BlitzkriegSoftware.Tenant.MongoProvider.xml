@@ -61,6 +61,11 @@
             CTOR
             </summary>
         </member>
+        <member name="F:BlitzkriegSoftware.Tenant.MongoProvider.MongoTenantDataProvider`1.Mongo_Root_DB">
+            <summary>
+            Mongo Root DB
+            </summary>
+        </member>
         <member name="M:BlitzkriegSoftware.Tenant.MongoProvider.MongoTenantDataProvider`1.MongoConnection">
             <summary>
             Get Tenant Collection
@@ -90,6 +95,78 @@
         <member name="M:BlitzkriegSoftware.Tenant.MongoProvider.MongoTenantDataProvider`1.Delete(System.Guid)">
             <summary>
             Delete
+            </summary>
+            <param name="id">Key</param>
+            <returns>True if so</returns>
+        </member>
+        <member name="T:BlitzkriegSoftware.Tenant.MongoProvider.MongoTenantUserProfileProvider`1">
+            <summary>
+            Mongo: Tenant User Provider
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="M:BlitzkriegSoftware.Tenant.MongoProvider.MongoTenantUserProfileProvider`1.#ctor(BlitzkriegSoftware.Tenant.MongoProvider.Models.MongoConfiguration)">
+            <summary>
+            CTOR
+            </summary>
+        </member>
+        <member name="F:BlitzkriegSoftware.Tenant.MongoProvider.MongoTenantUserProfileProvider`1.Mongo_Root_DB">
+            <summary>
+            Mongo Root DB
+            </summary>
+        </member>
+        <member name="M:BlitzkriegSoftware.Tenant.MongoProvider.MongoTenantUserProfileProvider`1.MongoConnection">
+            <summary>
+            Get Tenant Collection
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:BlitzkriegSoftware.Tenant.MongoProvider.MongoTenantUserProfileProvider`1.Read(System.String)">
+            <summary>
+            Read a UserProfile
+            </summary>
+            <param name="uniqueUserId">User Id from AuthN</param>
+            <returns>UserProfile of Type T or Null</returns>
+        </member>
+        <member name="M:BlitzkriegSoftware.Tenant.MongoProvider.MongoTenantUserProfileProvider`1.Read(System.Guid)">
+            <summary>
+            Read a UserProfile
+            </summary>
+            <param name="id">Key</param>
+            <returns>UserProfile of Type T or Null</returns>
+        </member>
+        <member name="M:BlitzkriegSoftware.Tenant.MongoProvider.MongoTenantUserProfileProvider`1.Write(`0)">
+            <summary>
+            Write UserProfile
+            </summary>
+            <param name="model">UserProfile of Type T</param>
+        </member>
+        <member name="M:BlitzkriegSoftware.Tenant.MongoProvider.MongoTenantUserProfileProvider`1.Exists(System.String)">
+            <summary>
+            Does UserProfile Exist?
+            </summary>
+            <param name="uniqueUserId">User Id from AuthN</param>
+            <returns>True if so</returns>
+        </member>
+        <member name="M:BlitzkriegSoftware.Tenant.MongoProvider.MongoTenantUserProfileProvider`1.Exists(System.Guid)">
+            <summary>
+            Does UserProfile Exist?
+            </summary>
+            <param name="id">Key</param>
+            <returns>True if so</returns>
+        </member>
+        <member name="M:BlitzkriegSoftware.Tenant.MongoProvider.MongoTenantUserProfileProvider`1.Delete(System.String)">
+            <summary>
+            Delete a UserProfile
+            <para>Warning Destructive</para>
+            </summary>
+            <param name="uniqueUserId">Key</param>
+            <returns>True if so</returns>
+        </member>
+        <member name="M:BlitzkriegSoftware.Tenant.MongoProvider.MongoTenantUserProfileProvider`1.Delete(System.Guid)">
+            <summary>
+            Delete a UserProfile
+            <para>Warning Destructive</para>
             </summary>
             <param name="id">Key</param>
             <returns>True if so</returns>

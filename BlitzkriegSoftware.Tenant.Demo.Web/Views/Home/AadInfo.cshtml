@@ -1,0 +1,47 @@
+﻿@model System.Security.Claims.ClaimsPrincipal
+
+@{
+    ViewData["Title"] = "Azure Active Directory Info";
+}
+
+<div class="text-left">
+    <h1 class="display-4">@ViewData["Title"]</h1>
+
+    <div class="container">
+        <h2>User</h2>
+
+        <table class="table table-bordered">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Name</th>
+                    <th>Value</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr>
+                    <td>Name</td>
+                    <td>@Model.Identity.Name</td>
+                </tr>
+                <tr>
+                    <td>IsAuthenticated</td>
+                    <td>@Model.Identity.IsAuthenticated</td>
+                </tr>
+                <tr>
+                    <td>AuthenticationType</td>
+                    <td>@Model.Identity.AuthenticationType</td>
+                </tr>
+                <tr><td colspan="2">Claims</td></tr>
+                @{
+                    foreach (var c in Model.Claims)
+                    {
+                        <tr>
+                            <td>@c.Type</td>
+                            <td><strong>@c.Value</strong></td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

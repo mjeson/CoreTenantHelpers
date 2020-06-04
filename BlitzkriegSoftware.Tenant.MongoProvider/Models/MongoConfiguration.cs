@@ -24,12 +24,12 @@
         /// <summary>
         /// Database
         /// </summary>
-        public string Database { get; set; } = "TenantProvider";
+        public string Database { get; set; } = "";
 
         /// <summary>
         /// Collection
         /// </summary>
-        public string Collection { get; set; } = "Tenants";
+        public string Collection { get; set; } = "";
 
         /// <summary>
         /// Password
