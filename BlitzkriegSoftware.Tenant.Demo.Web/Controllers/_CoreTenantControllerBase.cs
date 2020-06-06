@@ -1,4 +1,5 @@
 ﻿using BlitzkriegSoftware.Tenant.Libary;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -36,6 +37,31 @@ namespace BlitzkriegSoftware.Tenant.Demo.Web.Controllers
                 }
                 return this._user;
             }
+        }
+
+        public const int ClientCookie_Expires_Milliseconds = 1000 * 60 * 60;
+        public const string ClientCookie_Name = "TenantId";
+
+        /// <summary>
+        /// Set Client Cookie for Styling
+        /// </summary>
+        protected void ClientCookieSet()
+        {
+#pragma warning disable SCS0008 // The cookie is missing security flag Secure
+#pragma warning disable SCS0009 // The cookie is missing security flag HttpOnly
+            var option = new CookieOptions
+            {
+                Expires = DateTime.Now.AddMilliseconds(ClientCookie_Expires_Milliseconds),
+                HttpOnly = false,
+                Secure = false,
+                IsEssential = true,
+                SameSite = SameSiteMode.Lax,
+                Path = "/"
+            };
+#pragma warning restore SCS0009 // The cookie is missing security flag HttpOnly
+#pragma warning restore SCS0008 // The cookie is missing security flag Secure
+
+            this.Response?.Cookies.Append(ClientCookie_Name, this.TenantId.ToString(), option);
         }
 
         public _CoreTenantControllerBase(ILogger<_CoreTenantControllerBase> logger)

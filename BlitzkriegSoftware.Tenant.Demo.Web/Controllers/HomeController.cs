@@ -13,6 +13,12 @@ namespace BlitzkriegSoftware.Tenant.Demo.Web.Controllers
         
         public IActionResult Index()
         {
+            this.ClientCookieSet();
+            return this.RedirectToAction("Home");
+        }
+
+        public IActionResult Home()
+        {
             return this.View(this.TenantUser);
         }
 
