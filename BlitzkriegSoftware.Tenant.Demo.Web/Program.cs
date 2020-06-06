@@ -1,5 +1,4 @@
 using BlitzkriegSoftware.Tenant.Libary;
-using BlitzkriegSoftware.Tenant.Libary.Models;
 using BlitzkriegSoftware.Tenant.MongoProvider;
 using BlitzkriegSoftware.Tenant.MongoProvider.Models;
 using Microsoft.AspNetCore.Hosting;
@@ -9,7 +8,7 @@ using System.Collections.Generic;
 
 namespace BlitzkriegSoftware.Tenant.Demo.Web
 {
-    public class Program
+    public static class Program
     {
         public static void Main(string[] args)
         {

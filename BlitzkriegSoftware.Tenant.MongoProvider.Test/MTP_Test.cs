@@ -1,5 +1,4 @@
 using BlitzkriegSoftware.Tenant.Libary;
-using BlitzkriegSoftware.Tenant.Libary.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MongoDB.Bson;
 using MongoDB.Driver;

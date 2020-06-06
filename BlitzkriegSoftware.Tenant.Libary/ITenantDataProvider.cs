@@ -1,7 +1,6 @@
-﻿using BlitzkriegSoftware.Tenant.Libary.Models;
-using System;
+﻿using System;
 
-namespace BlitzkriegSoftware.Tenant.Libary
+namespace BlitzkriegSoftware.Tenant
 {
     /// <summary>
     /// Tenant Data Provider

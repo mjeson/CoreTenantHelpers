@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace BlitzkriegSoftware.Tenant.Libary
+namespace BlitzkriegSoftware.Tenant
 {
     /// <summary>
     /// UserProfile User Profile Provider

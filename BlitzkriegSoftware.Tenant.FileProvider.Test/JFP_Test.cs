@@ -1,5 +1,4 @@
 using BlitzkriegSoftware.Tenant.Libary;
-using BlitzkriegSoftware.Tenant.Libary.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
@@ -23,12 +22,12 @@ namespace BlitzkriegSoftware.Tenant.FileProvider.Test
 
         #region "Boilerplate"
 
-        private static TestContext Context;
+        private static TestContext testContext;
 
         [ClassInitialize]
         public static void InitClass(TestContext testContext)
         {
-            Context = testContext;
+            JFP_Test.testContext = testContext;
 
             if (Directory.Exists(Test_Data_Folder))
             {
@@ -103,6 +102,7 @@ namespace BlitzkriegSoftware.Tenant.FileProvider.Test
         {
             var di = new DirectoryInfo(Test_Data_Folder);
             var ct = di.GetFiles("*.json").Length;
+            testContext.WriteLine($"{di.FullName}, Count: {ct}");
             Assert.IsTrue(ct > 0);
         }
 
@@ -129,6 +129,7 @@ namespace BlitzkriegSoftware.Tenant.FileProvider.Test
             var model = new TenantBase();
             var id = Guid.Empty;
             model.Contact = new ContactBase() { TenantId = id, DisplayName = id.ToString() };
+            testContext.WriteLine($"{model.ToString()}");
             tp.TenantAddUpdate(model);
         }
 
@@ -138,6 +139,7 @@ namespace BlitzkriegSoftware.Tenant.FileProvider.Test
         public void Test_TenantAddUpdate_Bad_3()
         {
             var model = new TenantBase();
+            testContext.WriteLine($"{model.ToString()}");
             tp.TenantAddUpdate(model);
         }
 
@@ -171,6 +173,7 @@ namespace BlitzkriegSoftware.Tenant.FileProvider.Test
         {
             var id = Tenants[0];
             var model = (TenantBase)tp.TenantGet(id);
+            testContext.WriteLine($"{model.ToString()}");
             Assert.IsNotNull(model);
             Assert.AreEqual(id, model._id);
         }
@@ -207,6 +210,7 @@ namespace BlitzkriegSoftware.Tenant.FileProvider.Test
         {
             var id = Tenants[0];
             var model = tp.ConfigurationGet(id, ConfigKeys[0].Substring(0, 3));
+            testContext.WriteLine($"{model.ToString()}");
             Assert.IsNotNull(model);
             Assert.AreEqual(1, model.Count());
         }
@@ -217,6 +221,7 @@ namespace BlitzkriegSoftware.Tenant.FileProvider.Test
         {
             var id = Tenants[0];
             var model = tp.ConfigurationGet(id, string.Empty);
+            testContext.WriteLine($"{model.ToString()}");
             Assert.IsNotNull(model);
             Assert.AreEqual(4, model.Count());
         }
@@ -228,6 +233,7 @@ namespace BlitzkriegSoftware.Tenant.FileProvider.Test
             var id = Tenants[0];
             var keys = new List<string>() { "TenantLevel", "LogoFile" };
             var model = tp.ConfigurationGet(id, keys);
+            testContext.WriteLine($"{model.ToString()}");
             Assert.IsNotNull(model);
             Assert.AreEqual( 2, model.Count());
         }
@@ -239,6 +245,7 @@ namespace BlitzkriegSoftware.Tenant.FileProvider.Test
             var id = Tenants[0];
             var keys = new List<string>();
             var model = tp.ConfigurationGet(id, keys);
+            testContext.WriteLine($"{model.ToString()}");
             Assert.IsNotNull(model);
             Assert.AreEqual( 4, model.Count());
         }

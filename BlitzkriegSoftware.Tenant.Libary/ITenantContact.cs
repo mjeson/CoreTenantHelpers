@@ -1,7 +1,6 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace BlitzkriegSoftware.Tenant.Libary.Models
+namespace BlitzkriegSoftware.Tenant
 {
 
     /// <summary>

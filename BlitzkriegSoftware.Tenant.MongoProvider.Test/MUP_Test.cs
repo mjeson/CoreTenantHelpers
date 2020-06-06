@@ -1,5 +1,4 @@
 ﻿using BlitzkriegSoftware.Tenant.Libary;
-using BlitzkriegSoftware.Tenant.Libary.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MongoDB.Bson;
 using MongoDB.Driver;
@@ -42,9 +41,9 @@ namespace BlitzkriegSoftware.Tenant.MongoProvider.Test
 
         #region "Help"
 
-        private readonly static List<string> ConfigKeys = new List<string>() { "FirstName", "LastName", "Email", "PersonalUrl" };
+        private static readonly List<string> ConfigKeys = new List<string>() { "FirstName", "LastName", "Email", "PersonalUrl" };
 
-        static Guid[] Tenants = new Guid[] { Guid.NewGuid(), Guid.NewGuid() };
+        private static readonly Guid[] Tenants = new Guid[] { Guid.NewGuid(), Guid.NewGuid() };
 
         private static List<Guid> _users;
 

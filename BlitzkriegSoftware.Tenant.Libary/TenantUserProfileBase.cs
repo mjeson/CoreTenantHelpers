@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.ComponentModel.DataAnnotations;
 
-namespace BlitzkriegSoftware.Tenant.Libary.Models
+namespace BlitzkriegSoftware.Tenant.Libary
 {
     /// <summary>
     /// Base class that implements Tenant User Profile
@@ -139,6 +139,15 @@ namespace BlitzkriegSoftware.Tenant.Libary.Models
                 return flag;
             }
             return false;
+        }
+
+        /// <summary>
+        /// Get Hash Code
+        /// </summary>
+        /// <returns></returns>
+        public override int GetHashCode()
+        {
+            return this._id.GetHashCode() ^ this.UniqueUserId.GetHashCode() ^ string.Join(",", this?.Tenants).GetHashCode() ^ string.Join(",", this?.Settings.Select(x => $"{x.Key}={x.Value};") ).GetHashCode();
         }
 
     }

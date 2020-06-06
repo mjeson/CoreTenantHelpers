@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
-namespace BlitzkriegSoftware.Tenant.Libary
+namespace BlitzkriegSoftware.Tenant
 {
     /// <summary>
     /// Define the minimum data contract for a User Profile
