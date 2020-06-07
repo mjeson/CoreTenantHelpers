@@ -5,14 +5,14 @@
 @inject IViewLocalizer Localizer
 
 @{
-    ViewData["Title"] = @Localizer["Title"];
+    ViewData["Title"] = Localizer["Title"];
 }
 
 <div class="text-left">
     <h1 class="display-4">@ViewData["Title"]</h1>
 
     <div class="container-fluid">
-        <h2>User</h2>
+        <h2>@Localizer["User"]</h2>
 
         <table class="table table-bordered">
             <thead class="thead-dark">
