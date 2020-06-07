@@ -1,26 +1,30 @@
 ﻿@model BlitzkriegSoftware.Tenant.Libary.TenantUserProfileBase
 
+@using Microsoft.AspNetCore.Mvc.Localization
+
+@inject IViewLocalizer Localizer
+
 @{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = @Localizer["Title"];
 }
 
 <div class="text-left">
     <h1 class="display-4">@ViewData["Title"]</h1>
 
-    <div class="container">
+    <div class="container-fluid">
         <h2>User</h2>
 
         <table class="table table-bordered">
             <thead class="thead-dark">
                 <tr>
-                    <th>Name</th>
-                    <th>Value</th>
+                    <th>@Localizer["Name"]</th>
+                    <th>@Localizer["Value"]</th>
                 </tr>
             </thead>
 
             <tbody>
                 <tr>
-                    <td>Username</td>
+                    <td>@Localizer["Username"]</td>
                     <td>@Model.UniqueUserId</td>
                 </tr>
                 <tr>
@@ -28,19 +32,20 @@
                     <td>@Model._id</td>
                 </tr>
                 <tr>
-                    <td>Tenants</td>
+                    <td>@Localizer["Tenants"]</td>
                     <td>@string.Join(",", Model.Tenants)</td>
                 </tr>
-                <tr><td colspan="2">Settings</td></tr>
+                <tr><td colspan="2">@Localizer["Settings"]</td></tr>
 
                 @foreach (var s in Model.Settings.Keys)
                 {
                     <tr>
                         <td>@s</td>
                         <td>@Model.Settings[s]</td>
-                    </tr>    
+                    </tr>
+
                 }
-                </tbody>
+            </tbody>
         </table>
     </div>
 </div>
