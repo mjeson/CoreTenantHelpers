@@ -1,0 +1,5 @@
+﻿.table .thead-dark th {
+    color: white;
+    background-color: darkgreen;
+    border-color: darkgreen;
+}

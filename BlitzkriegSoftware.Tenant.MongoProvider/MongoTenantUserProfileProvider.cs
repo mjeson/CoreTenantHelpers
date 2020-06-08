@@ -1,5 +1,4 @@
 ﻿using BlitzkriegSoftware.Tenant.Libary;
-using BlitzkriegSoftware.Tenant.Libary.Models;
 using MongoDB.Bson.Serialization;
 using MongoDB.Driver;
 using System;

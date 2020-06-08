@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using BlitzkriegSoftware.Tenant.Libary.Models;
 
-namespace BlitzkriegSoftware.Tenant.Libary
+namespace BlitzkriegSoftware.Tenant
 {
     /// <summary>
     /// Generic Contract: Tenancy Providers

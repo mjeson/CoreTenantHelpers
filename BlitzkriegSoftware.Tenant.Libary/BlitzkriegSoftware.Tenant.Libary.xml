@@ -4,312 +4,67 @@
         <name>BlitzkriegSoftware.Tenant.Libary</name>
     </assembly>
     <members>
-        <member name="T:BlitzkriegSoftware.Tenant.Libary.ITenantDataProvider`1">
-            <summary>
-            Tenant Data Provider
-            </summary>
-        </member>
-        <member name="M:BlitzkriegSoftware.Tenant.Libary.ITenantDataProvider`1.Read(System.Guid)">
-            <summary>
-            Read a tenant
-            </summary>
-            <param name="id">Key</param>
-            <returns>Tenant of Type T or Null</returns>
-        </member>
-        <member name="M:BlitzkriegSoftware.Tenant.Libary.ITenantDataProvider`1.Write(`0)">
-            <summary>
-            Write tenant
-            </summary>
-            <param name="model">Tenant of Type T</param>
-        </member>
-        <member name="M:BlitzkriegSoftware.Tenant.Libary.ITenantDataProvider`1.Exists(System.Guid)">
-            <summary>
-            Does Tenant Exist?
-            </summary>
-            <param name="id">Key</param>
-            <returns>True if so</returns>
-        </member>
-        <member name="M:BlitzkriegSoftware.Tenant.Libary.ITenantDataProvider`1.Delete(System.Guid)">
-            <summary>
-            Delete a tenant
-            <para>Warning Destructive</para>
-            </summary>
-            <param name="id">Key</param>
-            <returns>True if so</returns>
-        </member>
-        <member name="T:BlitzkriegSoftware.Tenant.Libary.ITenantProvider">
-            <summary>
-            Generic Contract: Tenancy Providers
-            </summary>
-        </member>
-        <member name="M:BlitzkriegSoftware.Tenant.Libary.ITenantProvider.ContactGet(System.Guid)">
-            <summary>
-            Gets back the detailed tenant contact information
-            </summary>
-            <param name="tenantId">Primary Key</param>
-            <returns>ITenantContact</returns>
-        </member>
-        <member name="M:BlitzkriegSoftware.Tenant.Libary.ITenantProvider.ContactUpdate(System.Guid,BlitzkriegSoftware.Tenant.Libary.Models.ITenantContact)">
-            <summary>
-            
-            </summary>
-            <param name="tenantId">Primary Key</param>
-            <param name="contact"></param>
-            <returns></returns>
-        </member>
-        <member name="M:BlitzkriegSoftware.Tenant.Libary.ITenantProvider.ConfigurationGet(System.Guid,System.Collections.Generic.IEnumerable{System.String})">
-            <summary>
-            Fetch Configuration
-            </summary>
-            <param name="tenantId">Primary Key</param>
-            <param name="keys">List of keys to return (null is all config)</param>
-            <returns></returns>
-        </member>
-        <member name="M:BlitzkriegSoftware.Tenant.Libary.ITenantProvider.ConfigurationGet(System.Guid,System.String)">
-            <summary>
-            Fetch Configuration
-            </summary>
-            <param name="tenantId">Primary Key</param>
-            <param name="startsWith">Filter down to keys that `start with` (empty is all config)</param>
-            <returns></returns>
-        </member>
-        <member name="M:BlitzkriegSoftware.Tenant.Libary.ITenantProvider.ConfigurationUpdate(System.Guid,System.Collections.Generic.IEnumerable{System.Collections.Generic.KeyValuePair{System.String,System.String}})">
-            <summary>
-            Adds/Updates configuration for a tenant
-            </summary>
-            <param name="tenantId">Primary Key</param>
-            <param name="config">Configuration as used by <c>Microsoft.Extensions.Configuration</c> <c>MemoryCollection</c></param>
-            <returns></returns>
-        </member>
-        <member name="M:BlitzkriegSoftware.Tenant.Libary.ITenantProvider.TenantExists(System.Guid)">
-            <summary>
-            Does Tenant Exist
-            </summary>
-            <param name="tenantId"></param>
-            <returns></returns>
-        </member>
-        <member name="M:BlitzkriegSoftware.Tenant.Libary.ITenantProvider.TenantAddUpdate(BlitzkriegSoftware.Tenant.Libary.Models.ITenantModel)">
-            <summary>
-            Add/Update an entire tenant graph
-            </summary>
-            <param name="model">ITenantModel</param>
-            <returns>True if created, False if updated</returns>
-        </member>
-        <member name="M:BlitzkriegSoftware.Tenant.Libary.ITenantProvider.TenantGet(System.Guid)">
-            <summary>
-            Get entire tenant
-            </summary>
-            <param name="tenantId">Id</param>
-            <returns>Tenant Model</returns>
-        </member>
-        <member name="M:BlitzkriegSoftware.Tenant.Libary.ITenantProvider.TenantDelete(System.Guid)">
-            <summary>
-            Delete Tenant
-            <para>Implementationn should call out if this is destructive</para>
-            </summary>
-            <param name="tenantId">Primary Key</param>
-            <returns>True if deleted</returns>
-        </member>
-        <member name="T:BlitzkriegSoftware.Tenant.Libary.ITenantUserProfile">
-            <summary>
-            Define the minimum data contract for a User Profile
-            <para>These are shared across tenants</para>
-            </summary>
-        </member>
-        <member name="P:BlitzkriegSoftware.Tenant.Libary.ITenantUserProfile._id">
-            <summary>
-            Key
-            </summary>
-        </member>
-        <member name="P:BlitzkriegSoftware.Tenant.Libary.ITenantUserProfile.UniqueUserId">
-            <summary>
-            Unique Identifier form AuthN
-            </summary>
-        </member>
-        <member name="P:BlitzkriegSoftware.Tenant.Libary.ITenantUserProfile.Tenants">
-            <summary>
-            List of tenants, should never be null, or empty
-            </summary>
-        </member>
-        <member name="P:BlitzkriegSoftware.Tenant.Libary.ITenantUserProfile.Settings">
-            <summary>
-            (optional) additional settings (including user info obtained from AuthN)
-            </summary>
-        </member>
-        <member name="P:BlitzkriegSoftware.Tenant.Libary.ITenantUserProfile.UserIsValid">
-            <summary>
-            Checks the information on this instance to make sure it is valid
-            </summary>
-        </member>
-        <member name="M:BlitzkriegSoftware.Tenant.Libary.ITenantUserProfile.SettingsPut(System.String,System.String)">
-            <summary>
-            Passed a name,value pair this attempts to add/update settings
-            <para>Mapping the name and transforming the value if required</para>
-            </summary>
-            <param name="key"></param>
-            <param name="value"></param>
-            <returns></returns>
-        </member>
-        <member name="T:BlitzkriegSoftware.Tenant.Libary.ITenantUserProfileProvider`1">
-            <summary>
-            UserProfile User Profile Provider
-            </summary>
-            <typeparam name="T"></typeparam>
-        </member>
-        <member name="M:BlitzkriegSoftware.Tenant.Libary.ITenantUserProfileProvider`1.Read(System.String)">
-            <summary>
-            Read a UserProfile
-            </summary>
-            <param name="id">Key</param>
-            <returns>UserProfile of Type T or Null</returns>
-        </member>
-        <member name="M:BlitzkriegSoftware.Tenant.Libary.ITenantUserProfileProvider`1.Write(`0)">
-            <summary>
-            Write UserProfile
-            </summary>
-            <param name="model">UserProfile of Type T</param>
-        </member>
-        <member name="M:BlitzkriegSoftware.Tenant.Libary.ITenantUserProfileProvider`1.Exists(System.String)">
-            <summary>
-            Does UserProfile Exist?
-            </summary>
-            <param name="id">Key</param>
-            <returns>True if so</returns>
-        </member>
-        <member name="M:BlitzkriegSoftware.Tenant.Libary.ITenantUserProfileProvider`1.Delete(System.String)">
-            <summary>
-            Delete a UserProfile
-            <para>Warning Destructive</para>
-            </summary>
-            <param name="id">Key</param>
-            <returns>True if so</returns>
-        </member>
-        <member name="T:BlitzkriegSoftware.Tenant.Libary.Models.ContactBase">
+        <member name="T:BlitzkriegSoftware.Tenant.Libary.ContactBase">
             <summary>
             Model: Contact
             </summary>
         </member>
-        <member name="P:BlitzkriegSoftware.Tenant.Libary.Models.ContactBase.TenantId">
+        <member name="P:BlitzkriegSoftware.Tenant.Libary.ContactBase.TenantId">
             <summary>
             Key
             </summary>
         </member>
-        <member name="P:BlitzkriegSoftware.Tenant.Libary.Models.ContactBase.DisplayName">
+        <member name="P:BlitzkriegSoftware.Tenant.Libary.ContactBase.DisplayName">
             <summary>
             Display Name
             </summary>
         </member>
-        <member name="P:BlitzkriegSoftware.Tenant.Libary.Models.ContactBase.ContactPhone">
+        <member name="P:BlitzkriegSoftware.Tenant.Libary.ContactBase.ContactPhone">
             <summary>
             Contact Phone
             </summary>
         </member>
-        <member name="P:BlitzkriegSoftware.Tenant.Libary.Models.ContactBase.ContactEmail">
+        <member name="P:BlitzkriegSoftware.Tenant.Libary.ContactBase.ContactEmail">
             <summary>
             Contract E-Mail
             </summary>
         </member>
-        <member name="P:BlitzkriegSoftware.Tenant.Libary.Models.ContactBase.ContactName">
+        <member name="P:BlitzkriegSoftware.Tenant.Libary.ContactBase.ContactName">
             <summary>
             Contact Name
             </summary>
         </member>
-        <member name="T:BlitzkriegSoftware.Tenant.Libary.Models.ITenantContact">
-            <summary>
-            Tenant Contract
-            </summary>
-        </member>
-        <member name="P:BlitzkriegSoftware.Tenant.Libary.Models.ITenantContact.DisplayName">
-            <summary>
-            Tenant Display Name
-            </summary>
-        </member>
-        <member name="P:BlitzkriegSoftware.Tenant.Libary.Models.ITenantContact.ContactPhone">
-            <summary>
-            Phone (optional)
-            </summary>
-        </member>
-        <member name="P:BlitzkriegSoftware.Tenant.Libary.Models.ITenantContact.ContactEmail">
-            <summary>
-            EMail of Primary Contact
-            </summary>
-        </member>
-        <member name="P:BlitzkriegSoftware.Tenant.Libary.Models.ITenantContact.ContactName">
-            <summary>
-            Contact Name
-            </summary>
-        </member>
-        <member name="T:BlitzkriegSoftware.Tenant.Libary.Models.ITenantModel">
-            <summary>
-            Tenant Model Interface
-            </summary>
-        </member>
-        <member name="P:BlitzkriegSoftware.Tenant.Libary.Models.ITenantModel._id">
-            <summary>
-            Key
-            </summary>
-        </member>
-        <member name="P:BlitzkriegSoftware.Tenant.Libary.Models.ITenantModel.Contact">
-            <summary>
-            Contact
-            </summary>
-        </member>
-        <member name="P:BlitzkriegSoftware.Tenant.Libary.Models.ITenantModel.Configuration">
-            <summary>
-            Configuration
-            </summary>
-        </member>
-        <member name="T:BlitzkriegSoftware.Tenant.Libary.Models.TenantBase">
-            <summary>
-            Model: Tenant Base
-            </summary>
-        </member>
-        <member name="P:BlitzkriegSoftware.Tenant.Libary.Models.TenantBase._id">
-            <summary>
-            Key
-            </summary>
-        </member>
-        <member name="P:BlitzkriegSoftware.Tenant.Libary.Models.TenantBase.Contact">
-            <summary>
-            Contact
-            </summary>
-        </member>
-        <member name="P:BlitzkriegSoftware.Tenant.Libary.Models.TenantBase.Configuration">
-            <summary>
-            Configuration
-            </summary>
-        </member>
-        <member name="T:BlitzkriegSoftware.Tenant.Libary.Models.TenantUserProfileBase">
+        <member name="T:BlitzkriegSoftware.Tenant.Libary.TenantUserProfileBase">
             <summary>
             Base class that implements Tenant User Profile
             </summary>
         </member>
-        <member name="P:BlitzkriegSoftware.Tenant.Libary.Models.TenantUserProfileBase._id">
+        <member name="P:BlitzkriegSoftware.Tenant.Libary.TenantUserProfileBase._id">
             <summary>
             Key
             </summary>
         </member>
-        <member name="P:BlitzkriegSoftware.Tenant.Libary.Models.TenantUserProfileBase.UniqueUserId">
+        <member name="P:BlitzkriegSoftware.Tenant.Libary.TenantUserProfileBase.UniqueUserId">
             <summary>
             Unique Identifier from AuthN
             </summary>
         </member>
-        <member name="P:BlitzkriegSoftware.Tenant.Libary.Models.TenantUserProfileBase.Tenants">
+        <member name="P:BlitzkriegSoftware.Tenant.Libary.TenantUserProfileBase.Tenants">
             <summary>
             List of tenants, should never be null, or empty
             </summary>
         </member>
-        <member name="P:BlitzkriegSoftware.Tenant.Libary.Models.TenantUserProfileBase.Settings">
+        <member name="P:BlitzkriegSoftware.Tenant.Libary.TenantUserProfileBase.Settings">
             <summary>
             (optional) additional settings (including user info obtained from AuthN)
             </summary>
         </member>
-        <member name="P:BlitzkriegSoftware.Tenant.Libary.Models.TenantUserProfileBase.UserIsValid">
+        <member name="P:BlitzkriegSoftware.Tenant.Libary.TenantUserProfileBase.UserIsValid">
             <summary>
             Checks the information on this instance to make sure it is valid
             </summary>
         </member>
-        <member name="M:BlitzkriegSoftware.Tenant.Libary.Models.TenantUserProfileBase.SettingsPut(System.String,System.String)">
+        <member name="M:BlitzkriegSoftware.Tenant.Libary.TenantUserProfileBase.SettingsPut(System.String,System.String)">
             <summary>
             Passed a name,value pair this attempts to add/update settings
             <para>Mapping the name and transforming the value if required</para>
@@ -318,46 +73,297 @@
             <param name="value">(sic)</param>
             <returns>True if updated, False if added</returns>
         </member>
-        <member name="M:BlitzkriegSoftware.Tenant.Libary.Models.TenantUserProfileBase.ToString">
+        <member name="M:BlitzkriegSoftware.Tenant.Libary.TenantUserProfileBase.ToString">
             <summary>
             Debugging String
             </summary>
             <returns></returns>
         </member>
-        <member name="M:BlitzkriegSoftware.Tenant.Libary.Models.TenantUserProfileBase.Equals(System.Object)">
+        <member name="M:BlitzkriegSoftware.Tenant.Libary.TenantUserProfileBase.Equals(System.Object)">
             <summary>
             Test Equality
             </summary>
             <param name="obj"></param>
             <returns></returns>
         </member>
-        <member name="T:BlitzkriegSoftware.Tenant.Libary.TenantProvider`1">
+        <member name="M:BlitzkriegSoftware.Tenant.Libary.TenantUserProfileBase.GetHashCode">
+            <summary>
+            Get Hash Code
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:BlitzkriegSoftware.Tenant.ITenantContact">
+            <summary>
+            Tenant Contract
+            </summary>
+        </member>
+        <member name="P:BlitzkriegSoftware.Tenant.ITenantContact.DisplayName">
+            <summary>
+            Tenant Display Name
+            </summary>
+        </member>
+        <member name="P:BlitzkriegSoftware.Tenant.ITenantContact.ContactPhone">
+            <summary>
+            Phone (optional)
+            </summary>
+        </member>
+        <member name="P:BlitzkriegSoftware.Tenant.ITenantContact.ContactEmail">
+            <summary>
+            EMail of Primary Contact
+            </summary>
+        </member>
+        <member name="P:BlitzkriegSoftware.Tenant.ITenantContact.ContactName">
+            <summary>
+            Contact Name
+            </summary>
+        </member>
+        <member name="T:BlitzkriegSoftware.Tenant.ITenantDataProvider`1">
+            <summary>
+            Tenant Data Provider
+            </summary>
+        </member>
+        <member name="M:BlitzkriegSoftware.Tenant.ITenantDataProvider`1.Read(System.Guid)">
+            <summary>
+            Read a tenant
+            </summary>
+            <param name="id">Key</param>
+            <returns>Tenant of Type T or Null</returns>
+        </member>
+        <member name="M:BlitzkriegSoftware.Tenant.ITenantDataProvider`1.Write(`0)">
+            <summary>
+            Write tenant
+            </summary>
+            <param name="model">Tenant of Type T</param>
+        </member>
+        <member name="M:BlitzkriegSoftware.Tenant.ITenantDataProvider`1.Exists(System.Guid)">
+            <summary>
+            Does Tenant Exist?
+            </summary>
+            <param name="id">Key</param>
+            <returns>True if so</returns>
+        </member>
+        <member name="M:BlitzkriegSoftware.Tenant.ITenantDataProvider`1.Delete(System.Guid)">
+            <summary>
+            Delete a tenant
+            <para>Warning Destructive</para>
+            </summary>
+            <param name="id">Key</param>
+            <returns>True if so</returns>
+        </member>
+        <member name="T:BlitzkriegSoftware.Tenant.ITenantModel">
+            <summary>
+            Tenant Model Interface
+            </summary>
+        </member>
+        <member name="P:BlitzkriegSoftware.Tenant.ITenantModel._id">
+            <summary>
+            Key
+            </summary>
+        </member>
+        <member name="P:BlitzkriegSoftware.Tenant.ITenantModel.Contact">
+            <summary>
+            Contact
+            </summary>
+        </member>
+        <member name="P:BlitzkriegSoftware.Tenant.ITenantModel.Configuration">
+            <summary>
+            Configuration
+            </summary>
+        </member>
+        <member name="T:BlitzkriegSoftware.Tenant.ITenantProvider">
+            <summary>
+            Generic Contract: Tenancy Providers
+            </summary>
+        </member>
+        <member name="M:BlitzkriegSoftware.Tenant.ITenantProvider.ContactGet(System.Guid)">
+            <summary>
+            Gets back the detailed tenant contact information
+            </summary>
+            <param name="tenantId">Primary Key</param>
+            <returns>ITenantContact</returns>
+        </member>
+        <member name="M:BlitzkriegSoftware.Tenant.ITenantProvider.ContactUpdate(System.Guid,BlitzkriegSoftware.Tenant.ITenantContact)">
+            <summary>
+            
+            </summary>
+            <param name="tenantId">Primary Key</param>
+            <param name="contact"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BlitzkriegSoftware.Tenant.ITenantProvider.ConfigurationGet(System.Guid,System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            Fetch Configuration
+            </summary>
+            <param name="tenantId">Primary Key</param>
+            <param name="keys">List of keys to return (null is all config)</param>
+            <returns></returns>
+        </member>
+        <member name="M:BlitzkriegSoftware.Tenant.ITenantProvider.ConfigurationGet(System.Guid,System.String)">
+            <summary>
+            Fetch Configuration
+            </summary>
+            <param name="tenantId">Primary Key</param>
+            <param name="startsWith">Filter down to keys that `start with` (empty is all config)</param>
+            <returns></returns>
+        </member>
+        <member name="M:BlitzkriegSoftware.Tenant.ITenantProvider.ConfigurationUpdate(System.Guid,System.Collections.Generic.IEnumerable{System.Collections.Generic.KeyValuePair{System.String,System.String}})">
+            <summary>
+            Adds/Updates configuration for a tenant
+            </summary>
+            <param name="tenantId">Primary Key</param>
+            <param name="config">Configuration as used by <c>Microsoft.Extensions.Configuration</c> <c>MemoryCollection</c></param>
+            <returns></returns>
+        </member>
+        <member name="M:BlitzkriegSoftware.Tenant.ITenantProvider.TenantExists(System.Guid)">
+            <summary>
+            Does Tenant Exist
+            </summary>
+            <param name="tenantId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BlitzkriegSoftware.Tenant.ITenantProvider.TenantAddUpdate(BlitzkriegSoftware.Tenant.ITenantModel)">
+            <summary>
+            Add/Update an entire tenant graph
+            </summary>
+            <param name="model">ITenantModel</param>
+            <returns>True if created, False if updated</returns>
+        </member>
+        <member name="M:BlitzkriegSoftware.Tenant.ITenantProvider.TenantGet(System.Guid)">
+            <summary>
+            Get entire tenant
+            </summary>
+            <param name="tenantId">Id</param>
+            <returns>Tenant Model</returns>
+        </member>
+        <member name="M:BlitzkriegSoftware.Tenant.ITenantProvider.TenantDelete(System.Guid)">
+            <summary>
+            Delete Tenant
+            <para>Implementationn should call out if this is destructive</para>
+            </summary>
+            <param name="tenantId">Primary Key</param>
+            <returns>True if deleted</returns>
+        </member>
+        <member name="T:BlitzkriegSoftware.Tenant.ITenantUserProfile">
+            <summary>
+            Define the minimum data contract for a User Profile
+            <para>These are shared across tenants</para>
+            </summary>
+        </member>
+        <member name="P:BlitzkriegSoftware.Tenant.ITenantUserProfile._id">
+            <summary>
+            Key
+            </summary>
+        </member>
+        <member name="P:BlitzkriegSoftware.Tenant.ITenantUserProfile.UniqueUserId">
+            <summary>
+            Unique Identifier form AuthN
+            </summary>
+        </member>
+        <member name="P:BlitzkriegSoftware.Tenant.ITenantUserProfile.Tenants">
+            <summary>
+            List of tenants, should never be null, or empty
+            </summary>
+        </member>
+        <member name="P:BlitzkriegSoftware.Tenant.ITenantUserProfile.Settings">
+            <summary>
+            (optional) additional settings (including user info obtained from AuthN)
+            </summary>
+        </member>
+        <member name="P:BlitzkriegSoftware.Tenant.ITenantUserProfile.UserIsValid">
+            <summary>
+            Checks the information on this instance to make sure it is valid
+            </summary>
+        </member>
+        <member name="M:BlitzkriegSoftware.Tenant.ITenantUserProfile.SettingsPut(System.String,System.String)">
+            <summary>
+            Passed a name,value pair this attempts to add/update settings
+            <para>Mapping the name and transforming the value if required</para>
+            </summary>
+            <param name="key"></param>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="T:BlitzkriegSoftware.Tenant.ITenantUserProfileProvider`1">
+            <summary>
+            UserProfile User Profile Provider
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="M:BlitzkriegSoftware.Tenant.ITenantUserProfileProvider`1.Read(System.String)">
+            <summary>
+            Read a UserProfile
+            </summary>
+            <param name="id">Key</param>
+            <returns>UserProfile of Type T or Null</returns>
+        </member>
+        <member name="M:BlitzkriegSoftware.Tenant.ITenantUserProfileProvider`1.Write(`0)">
+            <summary>
+            Write UserProfile
+            </summary>
+            <param name="model">UserProfile of Type T</param>
+        </member>
+        <member name="M:BlitzkriegSoftware.Tenant.ITenantUserProfileProvider`1.Exists(System.String)">
+            <summary>
+            Does UserProfile Exist?
+            </summary>
+            <param name="id">Key</param>
+            <returns>True if so</returns>
+        </member>
+        <member name="M:BlitzkriegSoftware.Tenant.ITenantUserProfileProvider`1.Delete(System.String)">
+            <summary>
+            Delete a UserProfile
+            <para>Warning Destructive</para>
+            </summary>
+            <param name="id">Key</param>
+            <returns>True if so</returns>
+        </member>
+        <member name="T:BlitzkriegSoftware.Tenant.TenantBase">
+            <summary>
+            Model: Tenant Base
+            </summary>
+        </member>
+        <member name="P:BlitzkriegSoftware.Tenant.TenantBase._id">
+            <summary>
+            Key
+            </summary>
+        </member>
+        <member name="P:BlitzkriegSoftware.Tenant.TenantBase.Contact">
+            <summary>
+            Contact
+            </summary>
+        </member>
+        <member name="P:BlitzkriegSoftware.Tenant.TenantBase.Configuration">
+            <summary>
+            Configuration
+            </summary>
+        </member>
+        <member name="T:BlitzkriegSoftware.Tenant.TenantProvider`1">
             <summary>
             Tenant Provider
             </summary>
             <typeparam name="T"></typeparam>
         </member>
-        <member name="M:BlitzkriegSoftware.Tenant.Libary.TenantProvider`1.#ctor(BlitzkriegSoftware.Tenant.Libary.ITenantDataProvider{`0})">
+        <member name="M:BlitzkriegSoftware.Tenant.TenantProvider`1.#ctor(BlitzkriegSoftware.Tenant.ITenantDataProvider{`0})">
             <summary>
             CTOR
             </summary>
             <param name="dataProvider"></param>
         </member>
-        <member name="M:BlitzkriegSoftware.Tenant.Libary.TenantProvider`1.ContactGet(System.Guid)">
+        <member name="M:BlitzkriegSoftware.Tenant.TenantProvider`1.ContactGet(System.Guid)">
             <summary>
             Contact Get
             </summary>
             <param name="tenantId">Key</param>
             <returns>Contact</returns>
         </member>
-        <member name="M:BlitzkriegSoftware.Tenant.Libary.TenantProvider`1.ContactUpdate(System.Guid,BlitzkriegSoftware.Tenant.Libary.Models.ITenantContact)">
+        <member name="M:BlitzkriegSoftware.Tenant.TenantProvider`1.ContactUpdate(System.Guid,BlitzkriegSoftware.Tenant.ITenantContact)">
             <summary>
             Contact Add/Update
             </summary>
             <param name="tenantId">Key</param>
             <param name="contact">Contact</param>
         </member>
-        <member name="M:BlitzkriegSoftware.Tenant.Libary.TenantProvider`1.ConfigurationGet(System.Guid,System.Collections.Generic.IEnumerable{System.String})">
+        <member name="M:BlitzkriegSoftware.Tenant.TenantProvider`1.ConfigurationGet(System.Guid,System.Collections.Generic.IEnumerable{System.String})">
             <summary>
             Configuration Get
             </summary>
@@ -365,7 +371,7 @@
             <param name="keys">(optional) Keys to fetch</param>
             <returns>Configuration</returns>
         </member>
-        <member name="M:BlitzkriegSoftware.Tenant.Libary.TenantProvider`1.ConfigurationGet(System.Guid,System.String)">
+        <member name="M:BlitzkriegSoftware.Tenant.TenantProvider`1.ConfigurationGet(System.Guid,System.String)">
             <summary>
             Configuration Get
             </summary>
@@ -373,35 +379,35 @@
             <param name="startsWith">(optional) starts with</param>
             <returns>Configuration</returns>
         </member>
-        <member name="M:BlitzkriegSoftware.Tenant.Libary.TenantProvider`1.ConfigurationUpdate(System.Guid,System.Collections.Generic.IEnumerable{System.Collections.Generic.KeyValuePair{System.String,System.String}})">
+        <member name="M:BlitzkriegSoftware.Tenant.TenantProvider`1.ConfigurationUpdate(System.Guid,System.Collections.Generic.IEnumerable{System.Collections.Generic.KeyValuePair{System.String,System.String}})">
             <summary>
             ConfigurationAddUpdate
             </summary>
             <param name="tenantId">Tenant Id</param>
             <param name="config">Configuration is entirely replaced</param>
         </member>
-        <member name="M:BlitzkriegSoftware.Tenant.Libary.TenantProvider`1.TenantExists(System.Guid)">
+        <member name="M:BlitzkriegSoftware.Tenant.TenantProvider`1.TenantExists(System.Guid)">
             <summary>
             Tenant Exists?
             </summary>
             <param name="tenantId">Key</param>
             <returns>True if exists</returns>
         </member>
-        <member name="M:BlitzkriegSoftware.Tenant.Libary.TenantProvider`1.TenantAddUpdate(BlitzkriegSoftware.Tenant.Libary.Models.ITenantModel)">
+        <member name="M:BlitzkriegSoftware.Tenant.TenantProvider`1.TenantAddUpdate(BlitzkriegSoftware.Tenant.ITenantModel)">
             <summary>
             Tenant Add/Update
             </summary>
             <param name="model"></param>
             <returns>True if created, false if updated</returns>
         </member>
-        <member name="M:BlitzkriegSoftware.Tenant.Libary.TenantProvider`1.TenantGet(System.Guid)">
+        <member name="M:BlitzkriegSoftware.Tenant.TenantProvider`1.TenantGet(System.Guid)">
             <summary>
             Tenant Get
             </summary>
             <param name="tenantId"></param>
             <returns>Tenant Model</returns>
         </member>
-        <member name="M:BlitzkriegSoftware.Tenant.Libary.TenantProvider`1.TenantDelete(System.Guid)">
+        <member name="M:BlitzkriegSoftware.Tenant.TenantProvider`1.TenantDelete(System.Guid)">
             <summary>
             Delete tenant
             <para>Warning! Destructive!</para>

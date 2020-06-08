@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace BlitzkriegSoftware.Tenant.Libary.Models
+namespace BlitzkriegSoftware.Tenant.Libary
 {
     /// <summary>
     /// Model: Contact

@@ -1,9 +1,9 @@
-﻿using BlitzkriegSoftware.Tenant.Libary.Models;
+﻿using BlitzkriegSoftware.Tenant.Libary;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace BlitzkriegSoftware.Tenant.Libary
+namespace BlitzkriegSoftware.Tenant
 {
     /// <summary>
     /// Tenant Provider

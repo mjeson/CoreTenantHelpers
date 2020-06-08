@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace BlitzkriegSoftware.Tenant.Libary.Models
+namespace BlitzkriegSoftware.Tenant
 {
     /// <summary>
     /// Model: Tenant Base
